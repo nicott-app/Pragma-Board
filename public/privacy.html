@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidad — Pragma</title>
+  <meta name="description" content="Política de privacidad de Pragma conforme al RGPD (Reglamento UE 2016/679) y la Directiva ePrivacy.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    body { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .privacy-header { text-align: center; margin-bottom: 3rem; }
+    .privacy-header h1 { font-size: 2rem; margin-bottom: 0.75rem; }
+    .privacy-header p  { color: var(--tx-secondary); }
+    .privacy-section { margin-bottom: 2.5rem; }
+    .privacy-section h2 {
+      font-size: 1.125rem; font-weight: 700;
+      color: var(--tx-primary); margin-bottom: 0.875rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--bd-subtle);
+    }
+    .privacy-section p, .privacy-section li { color: var(--tx-secondary); line-height: 1.75; margin-bottom: 0.5rem; }
+    .privacy-section ul, .privacy-section ol { padding-left: 1.5rem; }
+    .privacy-section li { margin-bottom: 0.375rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin: 1rem 0; }
+    th { background: var(--bg-s2); padding: 0.625rem 0.875rem; text-align: left;
+         color: var(--tx-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 2px solid var(--bd-default); }
+    td { padding: 0.625rem 0.875rem; border-bottom: 1px solid var(--bd-subtle); color: var(--tx-secondary); vertical-align: top; }
+    .last-updated { font-size: 0.8125rem; color: var(--tx-muted); margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bd-subtle); text-align: center; }
+    a.back-link {
+      display: inline-flex; align-items: center; gap: 0.375rem;
+      color: var(--ac); font-size: 0.875rem; margin-bottom: 1.5rem;
+      text-decoration: none;
+    }
+    a.back-link:hover { color: var(--ac-light); }
+    .warning-box {
+      background: var(--warning-bg); border: 1px solid rgba(245,158,11,0.25);
+      border-radius: var(--r-md); padding: 1rem; margin-bottom: 1rem;
+      font-size: 0.875rem; color: var(--tx-secondary); display: flex; gap: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+
+<a href="index.html" class="back-link">← Volver a Pragma</a>
+
+<div class="privacy-header">
+  <div style="font-size:2.5rem;margin-bottom:0.75rem">🔒</div>
+  <h1>Política de Privacidad</h1>
+  <p>Pragma — Herramienta de gestión de proyectos con IA</p>
+</div>
+
+<!-- 1. Responsable -->
+<div class="privacy-section">
+  <h2>1. Responsable del tratamiento</h2>
+  <p>
+    El responsable del tratamiento de los datos personales recopilados a través de esta aplicación es <strong>Nicolás Tercero</strong> (en adelante, "El Desarrollador"), con correo electrónico de contacto <a href="mailto:ntercerotuda@gmail.com">ntercerotuda@gmail.com</a>.
+  </p>
+  <p>
+    En el estado actual del proyecto, la aplicación está preconfigurada con una base de datos centralizada de Firebase administrada por El Desarrollador. Por lo tanto, el almacenamiento de los datos se realiza en dicha infraestructura centralizada bajo la responsabilidad del Desarrollador, y no de forma aislada en proyectos individuales de los usuarios.
+  </p>
+  <p>
+    Para cualquier consulta relacionada con la privacidad o para ejercer tus derechos, puedes ponerte en contacto a través del correo electrónico indicado o gestionar tus datos locales desde la sección <strong>⚙️ Configuración → Privacidad</strong> de la aplicación.
+  </p>
+</div>
+
+<!-- 2. Datos recogidos -->
+<div class="privacy-section">
+  <h2>2. Datos personales tratados</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Dato</th>
+        <th>Dónde se almacena</th>
+        <th>Finalidad</th>
+        <th>Base legal (RGPD)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Credenciales de acceso (correo electrónico, contraseña cifrada y nombre de perfil)</td>
+        <td>Firebase Authentication (proyecto centralizado <code>ticketingapp-2e4f1</code>)</td>
+        <td>Autenticación, creación de cuentas y seguridad</td>
+        <td>Ejecución de contrato (Art. 6.1.b)</td>
+      </tr>
+      <tr>
+        <td>Tickets y tareas (título, descripción, comentarios, logs de tiempo, historial)</td>
+        <td>Firebase Firestore (proyecto centralizado <code>ticketingapp-2e4f1</code>)</td>
+        <td>Gestión de proyectos y tareas del equipo</td>
+        <td>Ejecución de contrato / Interés legítimo (Art. 6.1.b / Art. 6.1.f)</td>
+      </tr>
+      <tr>
+        <td>Nombres y datos de miembros del equipo</td>
+        <td>Firebase Firestore (proyecto centralizado) y localStorage del navegador</td>
+        <td>Asignación de tickets y control de miembros del equipo</td>
+        <td>Ejecución de contrato / Interés legítimo (Art. 6.1.b / Art. 6.1.f)</td>
+      </tr>
+      <tr>
+        <td>Credenciales de IA y configuración técnica</td>
+        <td>Preconfiguradas nativamente en la aplicación (almacenamiento en memoria durante la sesión)</td>
+        <td>Acceso a la API de IA (Groq / Gemini) e infraestructura del proyecto</td>
+        <td>Interés legítimo (Art. 6.1.f)</td>
+      </tr>
+      <tr>
+        <td>Preferencias de tema y UI</td>
+        <td>localStorage del navegador</td>
+        <td>Personalización de la interfaz de usuario</td>
+        <td>Interés legítimo (Art. 6.1.f)</td>
+      </tr>
+      <tr>
+        <td>Consentimiento RGPD</td>
+        <td>localStorage del navegador</td>
+        <td>Registro de consentimiento de políticas</td>
+        <td>Obligación legal (Art. 6.1.c)</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>Datos NO recogidos:</strong> Pragma no vende ni alquila datos personales a terceros. Tampoco utiliza cookies publicitarias, rastreadores de comportamiento de terceros o telemetría invasiva.</p>
+</div>
+
+<!-- 3. Procesadores de datos -->
+<div class="privacy-section">
+  <h2>3. Transferencia a terceros (subencargados de tratamiento)</h2>
+
+  <div class="warning-box">
+    <span>⚠️</span>
+    <span>
+      Pragma utiliza servicios de proveedores con sede en EE.UU. (<strong>Google LLC</strong> y <strong>Groq, Inc.</strong>) como subencargados del tratamiento. Las transferencias internacionales de datos se amparan en las <strong>Cláusulas Contractuales Tipo (SCCs)</strong> aprobadas por la Comisión Europea y en la adhesión de los proveedores al marco del <strong>Data Privacy Framework EU-US</strong>.
+    </span>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Servicio</th>
+        <th>Proveedor</th>
+        <th>Finalidad</th>
+        <th>Política de privacidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Firebase Firestore</strong></td>
+        <td>Google LLC</td>
+        <td>Almacenamiento centralizado del tablero, miembros, tareas y comentarios.</td>
+        <td><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">firebase.google.com/support/privacy</a></td>
+      </tr>
+      <tr>
+        <td><strong>Firebase Authentication</strong></td>
+        <td>Google LLC</td>
+        <td>Gestión de inicio de sesión, registro de cuentas de usuario y control de acceso.</td>
+        <td><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">firebase.google.com/support/privacy</a></td>
+      </tr>
+      <tr>
+        <td><strong>Groq API</strong></td>
+        <td>Groq, Inc.</td>
+        <td>Motor principal de Inteligencia Artificial para el autocompletado/generación de tickets y resúmenes de daily standup.</td>
+        <td><a href="https://groq.com/privacy-policy/" target="_blank" rel="noopener">groq.com/privacy-policy/</a></td>
+      </tr>
+      <tr>
+        <td><strong>Gemini API</strong></td>
+        <td>Google LLC</td>
+        <td>Motor secundario/alternativo de Inteligencia Artificial para procesamiento del lenguaje natural.</td>
+        <td><a href="https://ai.google.dev/terms" target="_blank" rel="noopener">ai.google.dev/terms</a></td>
+      </tr>
+      <tr>
+        <td><strong>Google Fonts</strong></td>
+        <td>Google LLC</td>
+        <td>Carga del estilo y tipografía de la interfaz (Inter).</td>
+        <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    <strong>Importante sobre las funciones de Inteligencia Artificial:</strong> Al usar SmartCreate o Daily Assistant, los textos ingresados se procesan en los servidores de Groq o de Google según el modelo configurado. Ninguno de estos servicios debe ser utilizado para enviar datos personales sensibles, contraseñas, datos financieros o información de clientes reales, ya que están sujetos a políticas de tratamiento y mejora de modelos de IA de terceros.
+  </p>
+
+  <p>
+    <strong>Ubicación de la base de datos:</strong> Para asegurar el cumplimiento con el RGPD y mantener los datos en Europa, el proyecto Firebase está configurado en servidores localizados en el Espacio Económico Europeo (región de Bélgica, <code>europe-west1</code>).
+  </p>
+</div>
+
+<!-- 4. Derechos del usuario -->
+<div class="privacy-section">
+  <h2>4. Derechos del interesado (Arts. 15-22 RGPD)</h2>
+  <p>Como usuario de Pragma tienes los siguientes derechos sobre tus datos almacenados en el proyecto centralizado de Firebase:</p>
+  <table>
+    <thead>
+      <tr><th>Derecho</th><th>Cómo ejercerlo</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Acceso (Art. 15)</strong></td>
+        <td>Todos tus tickets y logs son visibles directamente en la aplicación</td>
+      </tr>
+      <tr>
+        <td><strong>Rectificación (Art. 16)</strong></td>
+        <td>Edita cualquier ticket o miembro directamente en la interfaz</td>
+      </tr>
+      <tr>
+        <td><strong>Supresión / "derecho al olvido" (Art. 17)</strong></td>
+        <td>⚙️ Ajustes → Privacidad → <em>Borrar todo</em> (elimina tus datos de la base de datos) o contacta con el administrador</td>
+      </tr>
+      <tr>
+        <td><strong>Portabilidad (Art. 20)</strong></td>
+        <td>⚙️ Ajustes → Privacidad → <em>Exportar JSON</em></td>
+      </tr>
+      <tr>
+        <td><strong>Limitación del tratamiento (Art. 18)</strong></td>
+        <td>Cierra la sesión de tu cuenta o contacta al administrador en <a href="mailto:ntercerotuda@gmail.com">ntercerotuda@gmail.com</a></td>
+      </tr>
+      <tr>
+        <td><strong>Retirada del consentimiento (Art. 7.3)</strong></td>
+        <td>Elimina tu cuenta o solicita la baja de tus datos al Desarrollador</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    Tienes también derecho a presentar una reclamación ante la <strong>Agencia Española de Protección de Datos (AEPD)</strong>
+    en <a href="https://www.aepd.es" target="_blank" rel="noopener">aepd.es</a> si consideras que el tratamiento
+    de tus datos no cumple con la normativa vigente.
+  </p>
+</div>
+
+<!-- 5. Almacenamiento local -->
+<div class="privacy-section">
+  <h2>5. localStorage y almacenamiento local</h2>
+  <p>
+    Pragma utiliza <code>localStorage</code> del navegador para guardar tus preferencias locales (como el tema visual, el modo del tablero y el token de sesión si aplica). Al estar la configuración de Firebase y de la Inteligencia Artificial integradas de forma nativa en la aplicación, ya no es obligatorio que guardes localmente tus credenciales de base de datos o claves de API de IA, a menos que decidas configurar tu propio proyecto Firebase en ⚙️ Ajustes. Este almacenamiento local es <strong>estrictamente necesario</strong> para el correcto funcionamiento de la interfaz y no requiere consentimiento conforme al Considerando 25 de la Directiva ePrivacy 2002/58/CE.
+  </p>
+  <p>
+    Puedes eliminar estos datos locales en cualquier momento desde la sección de Privacidad de la aplicación (limpiando tus preferencias), o manualmente desde las herramientas de desarrollador de tu navegador (F12 → Application → localStorage).
+  </p>
+  <p><strong>Pragma no utiliza cookies de terceros ni de seguimiento.</strong></p>
+</div>
+
+<!-- 6. Retención -->
+<div class="privacy-section">
+  <h2>6. Período de retención</h2>
+  <p>
+    Los datos almacenados en el proyecto centralizado de Firebase se conservan indefinidamente mientras mantengas activa tu cuenta de usuario, o hasta que decidas eliminarlos usando la opción <em>Borrar todo</em> en ⚙️ Ajustes → Privacidad, o solicites su eliminación al Desarrollador. Los datos en localStorage se eliminan al limpiar la caché y datos del navegador.
+  </p>
+</div>
+
+<!-- 7. Menores -->
+<div class="privacy-section">
+  <h2>7. Menores de edad</h2>
+  <p>
+    Pragma es una herramienta profesional no dirigida a menores de 16 años. Si eres menor de 16 años,
+    necesitas el consentimiento de tu padre, madre o tutor legal para utilizar esta aplicación.
+  </p>
+</div>
+
+<!-- 8. Modificaciones -->
+<div class="privacy-section">
+  <h2>8. Modificaciones de esta política</h2>
+  <p>
+    Esta política puede actualizarse para reflejar cambios en la funcionalidad de la aplicación o en la
+    normativa aplicable. La fecha de última actualización se indica al pie de este documento.
+  </p>
+</div>
+
+<p class="last-updated">
+  Última actualización: junio 2026 · 
+  <a href="terms.html">Términos de Uso</a> · 
+  <a href="index.html">Volver a Pragma</a>
+</p>
+
+</body>
+</html>

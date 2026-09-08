@@ -1,0 +1,97 @@
+/* Utility Classes for Layout */
+
+/* Flexbox */
+.d-flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-row { flex-direction: row; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-1 { flex: 1; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-end { justify-content: flex-end; }
+.align-center { align-items: center; }
+.align-start { align-items: flex-start; }
+.align-end { align-items: flex-end; }
+.align-baseline { align-items: baseline; }
+
+/* Grid */
+.d-grid { display: grid; }
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+/* Gaps */
+.gap-05 { gap: 0.5rem; }
+.gap-1 { gap: 1rem; }
+.gap-15 { gap: 1.5rem; }
+.gap-2 { gap: 2rem; }
+.gap-025 { gap: 0.25rem; }
+.gap-075 { gap: 0.75rem; }
+
+/* Margins */
+.m-0 { margin: 0; }
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: 1rem; }
+.mb-0 { margin-bottom: 0; }
+.mb-025 { margin-bottom: 0.25rem; }
+.mb-05 { margin-bottom: 0.5rem; }
+.mb-1 { margin-bottom: 1rem; }
+.ml-auto { margin-left: auto; }
+.mr-auto { margin-right: auto; }
+.ml-05 { margin-left: 0.5rem; }
+.mr-05 { margin-right: 0.5rem; }
+.ml-1 { margin-left: 1rem; }
+
+/* Paddings */
+.p-0 { padding: 0; }
+.p-05 { padding: 0.5rem; }
+.p-1 { padding: 1rem; }
+.p-15 { padding: 1.5rem; }
+.pt-1 { padding-top: 1rem; }
+.pb-05 { padding-bottom: 0.5rem; }
+.pb-1 { padding-bottom: 1rem; }
+.px-1 { padding-left: 1rem; padding-right: 1rem; }
+.px-15 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.py-05 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.py-1 { padding-top: 1rem; padding-bottom: 1rem; }
+
+/* Width & Height */
+.w-100 { width: 100%; }
+.h-100 { height: 100%; }
+
+/* Typography */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+.fw-bold { font-weight: bold; }
+.fw-600 { font-weight: 600; }
+.fw-700 { font-weight: 700; }
+.fs-sm { font-size: 0.75rem; }
+.fs-md { font-size: 0.875rem; }
+.fs-lg { font-size: 1.25rem; }
+.fs-xl { font-size: 2rem; }
+
+/* Colors (Using existing CSS variables) */
+.text-primary { color: var(--tx-primary); }
+.text-secondary { color: var(--tx-secondary); }
+.text-muted { color: var(--tx-muted); }
+.text-error { color: var(--error); }
+.bg-s2 { background: var(--bg-s2); }
+.bg-s3 { background: var(--bg-s3); }
+
+/* Borders & Radius */
+.border-subtle { border: 1px solid var(--bd-subtle); }
+.border-default { border: 1px solid var(--bd-default); }
+.border-strong { border: 1px solid var(--bd-strong); }
+.border-b-subtle { border-bottom: 1px solid var(--bd-subtle); }
+.border-t-subtle { border-top: 1px solid var(--bd-subtle); }
+.border-none { border: none; }
+.rounded-sm { border-radius: var(--r-sm); }
+.rounded-md { border-radius: var(--r-md); }
+.rounded-full { border-radius: 50%; }
+
+/* Misc */
+.cursor-pointer { cursor: pointer; }
+.overflow-hidden { overflow: hidden; }
+.overflow-y-auto { overflow-y: auto; }
+.relative { position: relative; }
+.absolute { position: absolute; }

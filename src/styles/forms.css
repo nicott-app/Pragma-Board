@@ -1,0 +1,30 @@
+/* ─── Form Controls ──────────────────────────────────────── */
+.form-group { display: flex; flex-direction: column; gap: 0.375rem; }
+.form-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--tx-secondary);
+}
+
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  background: var(--bg-s2);
+  border: 1px solid var(--bd-default);
+  border-radius: var(--r-sm);
+  color: var(--tx-primary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+  outline: none;
+}
+.form-input, .form-select { padding: 0 0.875rem; height: 42px; }
+.form-textarea { padding: 0.6rem 0.875rem; resize: vertical; min-height: 80px; }
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  border-color: var(--ac);
+  box-shadow: 0 0 0 3px var(--ac-glow);
+  background: var(--bg-s1);
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--tx-muted); }
+.form-select { cursor: pointer; }
+.form-hint { font-size: 0.75rem; color: var(--tx-muted); }
+.form-error-msg { font-size: 0.75rem; color: var(--error); }

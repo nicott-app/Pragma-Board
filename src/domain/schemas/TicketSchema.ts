@@ -1,0 +1,30 @@
+import { z } from 'zod';
+
+export const TicketSchema = z.object({
+  id: z.string(),
+  code: z.string().optional(),
+  title: z.string(),
+  description: z.string().optional().default(''),
+  type: z.string().optional().default('tarea'),
+  priority: z.string().optional().default('medium'),
+  status: z.string(),
+  assignees: z.array(z.string()).optional().default([]),
+  estimatedHours: z.number().nullable().optional(),
+  sprintId: z.string().nullable().optional(),
+  tags: z.array(z.string()).optional().default([]),
+  acceptanceCriteria: z.array(z.string()).optional().default([]),
+  comments: z.array(z.any()).optional().default([]),
+  subtasks: z.array(z.any()).optional().default([]),
+  history: z.array(z.any()).optional().default([]),
+  timeLogs: z.array(z.any()).optional().default([]),
+  attachments: z.array(z.any()).optional().default([]),
+  isBlocked: z.boolean().optional(),
+  blockerReason: z.string().optional(),
+  archived: z.boolean().optional(),
+  isAI: z.boolean().optional(),
+  dueDate: z.string().optional(),
+  doneAt: z.string().optional(),
+  createdAt: z.string().optional(),
+  updatedAt: z.string().optional(),
+  order: z.number().optional()
+}).passthrough();
