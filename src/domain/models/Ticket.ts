@@ -42,6 +42,41 @@ export interface HistoryEvent {
   details?: string;
 }
 
+export interface RICEScore {
+  reach: number;
+  impact: number;
+  confidence: number;
+  effort: number;
+  total_score: number;
+  rationale: string;
+}
+
+export interface WSJFScore {
+  user_business_value: number;
+  time_criticality: number;
+  risk_reduction_opportunity: number;
+  job_size: number;
+  total_score: number;
+  rationale: string;
+}
+
+export interface MoSCoWScore {
+  category: 'Must have' | 'Should have' | 'Could have' | "Won't have" | string;
+  rationale: string;
+}
+
+export interface ValueComplexityScore {
+  value: number;
+  complexity: number;
+  quadrant: 'Quick Win' | 'Major Project' | 'Fill In' | 'Time Waster' | string;
+  rationale: string;
+}
+
+export interface KanoScore {
+  category: 'Basic' | 'Performance' | 'Excitement' | string;
+  rationale: string;
+}
+
 export interface Ticket {
   id: string;
   code?: string; // Legacy format DA-026
@@ -68,5 +103,10 @@ export interface Ticket {
   doneAt?: string; // ISO 8601
   createdAt: string;
   updatedAt: string;
+  rice_score?: RICEScore;
+  wsjf_score?: WSJFScore;
+  moscow_score?: MoSCoWScore;
+  value_complexity_score?: ValueComplexityScore;
+  kano_score?: KanoScore;
   order?: number;
 }

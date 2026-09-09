@@ -198,6 +198,36 @@ export const TicketCard: React.FC<TicketCardProps> = React.memo(
                   </span>
                 )}
 
+                {ticket.rice_score && (
+                  <span className="badge" style={{ background: '#e0e7ff', color: '#3730a3', border: '1px solid #c7d2fe' }} title={`RICE: ${ticket.rice_score.rationale}`}>
+                    🍚 RICE: {ticket.rice_score.total_score}
+                  </span>
+                )}
+                {ticket.wsjf_score && (
+                  <span className="badge" style={{ background: '#fce7f3', color: '#9d174d', border: '1px solid #fbcfe8' }} title={`WSJF: ${ticket.wsjf_score.rationale}`}>
+                    ⚖️ WSJF: {ticket.wsjf_score.total_score}
+                  </span>
+                )}
+                {ticket.moscow_score && (
+                  <span className="badge" style={{ 
+                    background: ticket.moscow_score.category === 'Must have' ? '#fee2e2' : ticket.moscow_score.category === 'Should have' ? '#fef3c7' : '#f3f4f6', 
+                    color: ticket.moscow_score.category === 'Must have' ? '#991b1b' : ticket.moscow_score.category === 'Should have' ? '#92400e' : '#4b5563', 
+                    border: '1px solid #e5e7eb' 
+                  }} title={ticket.moscow_score.rationale}>
+                    🎯 {ticket.moscow_score.category}
+                  </span>
+                )}
+                {ticket.value_complexity_score && (
+                  <span className="badge" style={{ background: '#dcfce7', color: '#166534', border: '1px solid #bbf7d0' }} title={ticket.value_complexity_score.rationale}>
+                    📊 V/C: {ticket.value_complexity_score.quadrant}
+                  </span>
+                )}
+                {ticket.kano_score && (
+                  <span className="badge" style={{ background: '#fae8ff', color: '#86198f', border: '1px solid #f5d0fe' }} title={ticket.kano_score.rationale}>
+                    😊 Kano: {ticket.kano_score.category}
+                  </span>
+                )}
+
                 {ticketNotesCount > 0 && (
                   <span
                     className="badge"

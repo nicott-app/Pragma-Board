@@ -39,7 +39,7 @@ export const TicketTabs: React.FC<TicketTabsProps> = ({
   onReviewNote,
   onOpenNotes,
 }) => {
-  const [activeTab, setActiveTab] = useState<'comments' | 'attachments' | 'history' | 'notes'>(
+  const [activeTab, setActiveTab] = useState<'comments' | 'attachments' | 'history' | 'notes' | 'ai'>(
     'comments'
   );
 
@@ -119,6 +119,7 @@ export const TicketTabs: React.FC<TicketTabsProps> = ({
             id: 'notes',
             label: `📓 Notas (${unreviewedNotes?.filter((n) => n.linkedTicketId === ticket?.id).length || 0})`,
           },
+          ...(ticket.rice_score || ticket.wsjf_score || ticket.moscow_score || ticket.value_complexity_score || ticket.kano_score ? [{ id: 'ai', label: '💡 Análisis IA' }] : []),
         ].map((tab) => (
           <button
             key={tab.id}
@@ -662,6 +663,86 @@ export const TicketTabs: React.FC<TicketTabsProps> = ({
                     </div>
                   </div>
                 ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'ai' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            {ticket.rice_score && (
+              <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                <h4 style={{ margin: '0 0 0.5rem 0', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span>🍚</span> RICE Score: {ticket.rice_score.total_score}
+                </h4>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem', marginBottom: '1rem', fontSize: '0.8rem' }}>
+                  <div style={{ background: '#fff', padding: '0.5rem', borderRadius: '4px', border: '1px solid #e2e8f0' }}><strong>Reach:</strong> {ticket.rice_score.reach}</div>
+                  <div style={{ background: '#fff', padding: '0.5rem', borderRadius: '4px', border: '1px solid #e2e8f0' }}><strong>Impact:</strong> {ticket.rice_score.impact}</div>
+                  <div style={{ background: '#fff', padding: '0.5rem', borderRadius: '4px', border: '1px solid #e2e8f0' }}><strong>Confidence:</strong> {ticket.rice_score.confidence}%</div>
+                  <div style={{ background: '#fff', padding: '0.5rem', borderRadius: '4px', border: '1px solid #e2e8f0' }}><strong>Effort:</strong> {ticket.rice_score.effort}</div>
+                </div>
+                <div>
+                  <strong style={{ fontSize: '0.85rem', color: '#475569' }}>Justificación estratégica:</strong>
+                  <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.875rem', color: '#334155', lineHeight: 1.5 }}>{ticket.rice_score.rationale}</p>
+                </div>
+              </div>
+            )}
+
+            {ticket.wsjf_score && (
+              <div style={{ background: '#fdf2f8', padding: '1rem', borderRadius: '8px', border: '1px solid #fbcfe8' }}>
+                <h4 style={{ margin: '0 0 0.5rem 0', color: '#831843', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span>⚖️</span> WSJF Score: {ticket.wsjf_score.total_score}
+                </h4>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem', marginBottom: '1rem', fontSize: '0.8rem' }}>
+                  <div style={{ background: '#fff', padding: '0.5rem', borderRadius: '4px', border: '1px solid #fbcfe8' }}><strong>Business Value:</strong> {ticket.wsjf_score.user_business_value}</div>
+                  <div style={{ background: '#fff', padding: '0.5rem', borderRadius: '4px', border: '1px solid #fbcfe8' }}><strong>Time Criticality:</strong> {ticket.wsjf_score.time_criticality}</div>
+                  <div style={{ background: '#fff', padding: '0.5rem', borderRadius: '4px', border: '1px solid #fbcfe8' }}><strong>Risk Reduction:</strong> {ticket.wsjf_score.risk_reduction_opportunity}</div>
+                  <div style={{ background: '#fff', padding: '0.5rem', borderRadius: '4px', border: '1px solid #fbcfe8' }}><strong>Job Size:</strong> {ticket.wsjf_score.job_size}</div>
+                </div>
+                <div>
+                  <strong style={{ fontSize: '0.85rem', color: '#831843' }}>Justificación estratégica:</strong>
+                  <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.875rem', color: '#9d174d', lineHeight: 1.5 }}>{ticket.wsjf_score.rationale}</p>
+                </div>
+              </div>
+            )}
+
+            {ticket.moscow_score && (
+              <div style={{ background: '#fef2f2', padding: '1rem', borderRadius: '8px', border: '1px solid #fecaca' }}>
+                <h4 style={{ margin: '0 0 0.5rem 0', color: '#7f1d1d', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span>🎯</span> MoSCoW: {ticket.moscow_score.category}
+                </h4>
+                <div>
+                  <strong style={{ fontSize: '0.85rem', color: '#7f1d1d' }}>Justificación estratégica:</strong>
+                  <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.875rem', color: '#991b1b', lineHeight: 1.5 }}>{ticket.moscow_score.rationale}</p>
+                </div>
+              </div>
+            )}
+
+            {ticket.value_complexity_score && (
+              <div style={{ background: '#f0fdf4', padding: '1rem', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
+                <h4 style={{ margin: '0 0 0.5rem 0', color: '#14532d', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span>📊</span> Valor vs Complejidad: {ticket.value_complexity_score.quadrant}
+                </h4>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem', marginBottom: '1rem', fontSize: '0.8rem' }}>
+                  <div style={{ background: '#fff', padding: '0.5rem', borderRadius: '4px', border: '1px solid #bbf7d0' }}><strong>Valor:</strong> {ticket.value_complexity_score.value}</div>
+                  <div style={{ background: '#fff', padding: '0.5rem', borderRadius: '4px', border: '1px solid #bbf7d0' }}><strong>Complejidad:</strong> {ticket.value_complexity_score.complexity}</div>
+                </div>
+                <div>
+                  <strong style={{ fontSize: '0.85rem', color: '#14532d' }}>Justificación estratégica:</strong>
+                  <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.875rem', color: '#166534', lineHeight: 1.5 }}>{ticket.value_complexity_score.rationale}</p>
+                </div>
+              </div>
+            )}
+
+            {ticket.kano_score && (
+              <div style={{ background: '#faf5ff', padding: '1rem', borderRadius: '8px', border: '1px solid #e9d5ff' }}>
+                <h4 style={{ margin: '0 0 0.5rem 0', color: '#581c87', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span>😊</span> Modelo Kano: {ticket.kano_score.category}
+                </h4>
+                <div>
+                  <strong style={{ fontSize: '0.85rem', color: '#581c87' }}>Justificación estratégica:</strong>
+                  <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.875rem', color: '#6b21a8', lineHeight: 1.5 }}>{ticket.kano_score.rationale}</p>
+                </div>
               </div>
             )}
           </div>

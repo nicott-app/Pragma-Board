@@ -26,5 +26,10 @@ export const TicketSchema = z.object({
   doneAt: z.string().optional(),
   createdAt: z.string().optional(),
   updatedAt: z.string().optional(),
+  rice_score: z.any().optional(),
+  wsjf_score: z.any().optional(),
+  moscow_score: z.any().optional(),
+  value_complexity_score: z.any().optional(),
+  kano_score: z.any().optional(),
   order: z.number().optional()
 }).passthrough();

@@ -76,6 +76,12 @@ export const ListView: React.FC = () => {
                 const pmap: Record<string, number> = { low: 1, medium: 2, high: 3, critical: 4 };
                 aVal = pmap[a.priority] || 0;
                 bVal = pmap[b.priority] || 0;
+              } else if (sortCol === 'rice') {
+                aVal = a.rice_score?.total_score ?? -1;
+                bVal = b.rice_score?.total_score ?? -1;
+              } else if (sortCol === 'wsjf') {
+                aVal = a.wsjf_score?.total_score ?? -1;
+                bVal = b.wsjf_score?.total_score ?? -1;
               }
 
               if (aVal < bVal) return sortOrder === 'asc' ? -1 : 1;
@@ -179,6 +185,28 @@ export const ListView: React.FC = () => {
                         >
                           Tipo {sortCol === 'type' && (sortOrder === 'asc' ? '↑' : '↓')}
                         </th>
+                        <th
+                          onClick={() => handleSort('rice')}
+                          style={{
+                            padding: '0.75rem',
+                            color: 'var(--tx-secondary)',
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                          }}
+                        >
+                          RICE {sortCol === 'rice' && (sortOrder === 'asc' ? '↑' : '↓')}
+                        </th>
+                        <th
+                          onClick={() => handleSort('wsjf')}
+                          style={{
+                            padding: '0.75rem',
+                            color: 'var(--tx-secondary)',
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                          }}
+                        >
+                          WSJF {sortCol === 'wsjf' && (sortOrder === 'asc' ? '↑' : '↓')}
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -263,12 +291,26 @@ export const ListView: React.FC = () => {
                           <td style={{ padding: '0.75rem' }}>
                             <span className={`badge badge-${t.type || 'tarea'}`}>{t.type}</span>
                           </td>
+                          <td style={{ padding: '0.75rem', fontSize: '0.85rem' }}>
+                            {t.rice_score ? (
+                              <span style={{ fontWeight: 600, color: '#3730a3' }} title={t.rice_score.rationale}>
+                                {t.rice_score.total_score}
+                              </span>
+                            ) : '-'}
+                          </td>
+                          <td style={{ padding: '0.75rem', fontSize: '0.85rem' }}>
+                            {t.wsjf_score ? (
+                              <span style={{ fontWeight: 600, color: '#9d174d' }} title={t.wsjf_score.rationale}>
+                                {t.wsjf_score.total_score}
+                              </span>
+                            ) : '-'}
+                          </td>
                         </tr>
                       ))}
                       {groupSorted.length === 0 && (
                         <tr>
                           <td
-                            colSpan={5}
+                            colSpan={7}
                             style={{
                               padding: '2rem',
                               textAlign: 'center',
