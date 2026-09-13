@@ -43,7 +43,7 @@ export const LoginModal: React.FC = () => {
             {isRegister ? 'Crear una cuenta' : 'Iniciar sesión'}
           </h2>
           <p style={{ fontSize: '0.8125rem', color: 'var(--tx-secondary)' }}>
-            {isRegister ? 'Solicita acceso a Pragma Board' : 'Accede a tu tablero Pragma'}
+            {isRegister ? 'Solicita acceso a Sprinto' : 'Accede a tu tablero Sprinto'}
           </p>
         </div>
 

@@ -23,9 +23,9 @@ export const Topbar: React.FC = () => {
 
   return (
     <header id="topbar" role="banner">
-      <div className="logo" aria-label="Pragma inicio" style={{ gap: '0.5rem' }}>
-        <img src="/pragma-logo.png" alt="Pragma Logo" width="24" height="24" />
-        <span>Pragma</span>
+      <div className="logo" aria-label="Sprinto inicio" style={{ gap: '0.6rem' }}>
+        <img src="/sprinto-logo.svg" alt="Sprinto Logo" width="36" height="36" style={{ borderRadius: '6px', objectFit: 'contain' }} />
+        <span style={{ fontSize: '1.25rem' }}>Sprinto</span>
       </div>
 
       <div className="topbar-sep" aria-hidden="true"></div>
@@ -292,3 +292,4 @@ export const Topbar: React.FC = () => {
     </header>
   );
 };
+

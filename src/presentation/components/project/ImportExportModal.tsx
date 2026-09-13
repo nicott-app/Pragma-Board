@@ -172,7 +172,7 @@ export const ImportExportModal: React.FC = () => {
     const rawPriority = getVal(['priority', 'prioridad']);
     const rawSP = getVal(['story points', 'custom field (story points)', 'estimación', 'estimacion', 'original estimate', 'esfuerzo']);
 
-    // Legacy Pragma type mapping
+    // Legacy Sprinto type mapping
     let type: TicketType = 'tarea';
     const typeLower = rawType.toLowerCase();
     if (typeLower.includes('bug') || typeLower.includes('error') || typeLower.includes('defecto')) type = 'bug';
@@ -182,7 +182,7 @@ export const ImportExportModal: React.FC = () => {
     else if (typeLower.includes('incident') || typeLower.includes('incidencia') || typeLower.includes('soporte')) type = 'incidencia';
     else if (typeLower.includes('deliverable') || typeLower.includes('entregable') || typeLower.includes('document')) type = 'entregable';
 
-    // Legacy Pragma priority mapping
+    // Legacy Sprinto priority mapping
     let priority: Ticket['priority'] = 'medium';
     const prioLower = rawPriority.toLowerCase();
     if (prioLower.includes('critical') || prioLower.includes('highest') || prioLower.includes('crítica') || prioLower.includes('critica') || prioLower.includes('bloqueante')) priority = 'critical';

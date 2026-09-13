@@ -13,7 +13,7 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-const app = !getApps().length ? initializeApp(firebaseConfig, 'pragma-v2') : getApp('pragma-v2');
+const app = !getApps().length ? initializeApp(firebaseConfig, 'sprinto-v2') : getApp('sprinto-v2');
 const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);

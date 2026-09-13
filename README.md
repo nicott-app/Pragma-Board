@@ -1,6 +1,6 @@
-# Pragma Board
+# Sprinto
 
-Pragma Board es una herramienta avanzada de gestión de proyectos y seguimiento de tareas diseñada para equipos ágiles. Permite organizar el trabajo mediante múltiples vistas (Kanban, Lista, Gantt), colaborar en tiempo real y acelerar rutinas diarias gracias a su integración con Inteligencia Artificial (Google Gemini).
+Sprinto es una herramienta avanzada de gestión de proyectos y seguimiento de tareas diseñada para equipos ágiles. Permite organizar el trabajo mediante múltiples vistas (Kanban, Lista, Gantt), colaborar en tiempo real y acelerar rutinas diarias gracias a su integración con Inteligencia Artificial (Google Gemini).
 
 ## 🚀 Características Principales
 
@@ -31,12 +31,12 @@ El proyecto está desarrollado con una arquitectura moderna de Front-end orienta
 
 ## ⚙️ Instalación y Configuración Local
 
-Si deseas ejecutar Pragma Board en tu máquina local para desarrollo:
+Si deseas ejecutar Sprinto en tu máquina local para desarrollo:
 
 1. **Clonar el repositorio:**
    ```bash
    git clone <URL_DEL_REPOSITORIO>
-   cd pragma-board/v2
+   cd sprinto/v2
    ```
 
 2. **Instalar dependencias:**
