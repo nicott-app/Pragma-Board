@@ -37,6 +37,59 @@ export const TicketSidebar: React.FC<TicketSidebarProps> = ({
   notifyBlocked
 }) => {
   const [newTag, setNewTag] = React.useState('');
+  const [manualDate, setManualDate] = React.useState('');
+
+  React.useEffect(() => {
+    if (ticket.dueDate) {
+      const date = new Date(ticket.dueDate);
+      if (!isNaN(date.getTime())) {
+        const dd = String(date.getDate()).padStart(2, '0');
+        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const yyyy = date.getFullYear();
+        setManualDate(`${dd}/${mm}/${yyyy}`);
+      }
+    } else {
+      setManualDate('');
+    }
+  }, [ticket.dueDate]);
+
+  const handleManualDateBlur = () => {
+    const trimmed = manualDate.trim();
+    if (!trimmed) {
+      handleUpdate('dueDate', undefined);
+      return;
+    }
+    const parts = trimmed.split(/[\/\-\.]/);
+    if (parts.length === 3) {
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      let year = parseInt(parts[2], 10);
+      if (year < 100) year += 2000;
+      
+      const parsedDate = new Date(year, month, day);
+      if (!isNaN(parsedDate.getTime())) {
+        // preserve time if we want, or just set to noon/midnight. 
+        // toISOString uses UTC. Local date to ISO string is tricky.
+        // Let's create a local date and format as ISO string properly.
+        // Actually, creating new Date(year, month, day) gives local time at 00:00:00.
+        // To avoid timezone offset issues making it the previous day in UTC, we can just use new Date(year, month, day, 12, 0, 0)
+        parsedDate.setHours(12, 0, 0, 0);
+        handleUpdate('dueDate', parsedDate.toISOString());
+        return;
+      }
+    }
+    
+    // Revert to valid value if parsing failed
+    if (ticket.dueDate) {
+      const date = new Date(ticket.dueDate);
+      const dd = String(date.getDate()).padStart(2, '0');
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const yyyy = date.getFullYear();
+      setManualDate(`${dd}/${mm}/${yyyy}`);
+    } else {
+      setManualDate('');
+    }
+  };
 
   return (
     <div style={{ width: '320px', background: '#f9fafb', borderLeft: '1px solid #e5e7eb', padding: '1.5rem', paddingTop: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', overflowY: 'auto' }}>
@@ -130,7 +183,29 @@ export const TicketSidebar: React.FC<TicketSidebarProps> = ({
 
       <div>
         <h4 style={{ fontSize: '0.75rem', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.5rem', fontWeight: 600 }}>FECHA FIN</h4>
-        <input type="date" value={ticket.dueDate?.split('T')[0] || ''} onChange={e => handleUpdate('dueDate', e.target.value ? new Date(e.target.value).toISOString() : undefined)} style={{ width: '100%', padding: '0.5rem', borderRadius: '6px', border: '1px solid #d1d5db', outline: 'none', fontSize: '0.875rem', color: '#374151' }} />
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <input 
+            type="text" 
+            placeholder="DD/MM/YYYY" 
+            value={manualDate}
+            onChange={e => setManualDate(e.target.value)}
+            onBlur={handleManualDateBlur}
+            onKeyDown={e => { if (e.key === 'Enter') handleManualDateBlur(); }}
+            style={{ flex: 1, padding: '0.5rem', borderRadius: '6px', border: '1px solid #d1d5db', outline: 'none', fontSize: '0.875rem', color: '#374151' }}
+          />
+          <div style={{ position: 'relative', width: '36px', height: '36px', flexShrink: 0 }}>
+            <input 
+              type="date" 
+              value={ticket.dueDate?.split('T')[0] || ''} 
+              onChange={e => handleUpdate('dueDate', e.target.value ? new Date(e.target.value).toISOString() : undefined)} 
+              style={{ position: 'absolute', opacity: 0, width: '100%', height: '100%', cursor: 'pointer', zIndex: 2 }} 
+              title="Seleccionar del calendario"
+            />
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f3f4f6', border: '1px solid #d1d5db', borderRadius: '6px', pointerEvents: 'none', zIndex: 1, color: '#4b5563' }}>
+              📅
+            </div>
+          </div>
+        </div>
       </div>
 
       <div>
