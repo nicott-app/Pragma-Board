@@ -4,6 +4,8 @@ import { db } from './FirebaseConfig';
 import { TicketRepository } from '../../domain/repositories/TicketRepository';
 import { Ticket } from '../../domain/models/Ticket';
 import { TicketSchema } from '../../domain/schemas/TicketSchema';
+import { toISOString } from '../../lib/dateUtils';
+
 
 /**
  * Returns a numeric sort key for a ticket.
@@ -137,7 +139,21 @@ export class FirebaseTicketRepository implements TicketRepository {
     return onSnapshot(q, (snapshot) => {
       const tickets = snapshot.docs.map(doc => {
         const data = doc.data();
-        return { ...data, id: doc.id, code: data.code || data.id } as Ticket;
+        // Normalise all date fields: Firebase may return Timestamp objects,
+        // plain serialised { seconds, nanoseconds } objects, or ISO strings.
+        // We always expose ISO strings to the application layer.
+        const createdAt = toISOString(data.createdAt) || new Date().toISOString();
+        const updatedAt = toISOString(data.updatedAt) || createdAt;
+        const doneAt    = data.doneAt ? toISOString(data.doneAt) : undefined;
+
+        return {
+          ...data,
+          id: doc.id,
+          code: data.code || data.id,
+          createdAt,
+          updatedAt,
+          ...(doneAt ? { doneAt } : {}),
+        } as unknown as Ticket;
       });
       sortTicketsByOrder(tickets);
       onUpdate(tickets);
@@ -146,3 +162,4 @@ export class FirebaseTicketRepository implements TicketRepository {
     });
   }
 }
+

@@ -7,7 +7,20 @@ export interface BoardColumn {
   wip: number | null;
   emoji: string;
   isBlocker?: boolean;
+  /**
+   * Semantic role of this column, used by features like the Daily Standup
+   * to classify tickets regardless of column order or label.
+   *
+   *  'backlog' – tickets not yet started (hidden from Daily active sections)
+   *  'active'  – tickets currently being worked on (each column gets its own Daily section)
+   *  'done'    – tickets completed (shown in Daily filtered by recency)
+   *
+   * When absent, the role is inferred automatically:
+   *   first column → 'backlog', last column → 'done', rest → 'active'.
+   */
+  role?: 'backlog' | 'active' | 'done';
 }
+
 
 export type ProjectVisibility = 'public' | 'private';
 

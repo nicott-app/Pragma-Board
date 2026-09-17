@@ -1,7 +1,28 @@
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, query, where, serverTimestamp } from 'firebase/firestore';
 import { db } from './FirebaseConfig';
 import { ProjectRepository } from '../../domain/repositories/ProjectRepository';
-import { Project } from '../../domain/models/Project';
+import { Project, BoardColumn } from '../../domain/models/Project';
+
+/**
+ * Assigns semantic roles to columns that were created before the `role`
+ * field was introduced, so all downstream consumers can rely on it being
+ * present without requiring a Firestore migration.
+ *
+ * Rules (only applied when `role` is absent):
+ *   index 0          → 'backlog'
+ *   index (last)     → 'done'
+ *   everything else  → 'active'
+ */
+function inferColumnRoles(columns: BoardColumn[]): BoardColumn[] {
+  if (!columns || columns.length === 0) return columns;
+  return columns.map((col, idx) => {
+    if (col.role) return col; // already has an explicit role — respect it
+    if (idx === 0) return { ...col, role: 'backlog' as const };
+    if (idx === columns.length - 1) return { ...col, role: 'done' as const };
+    return { ...col, role: 'active' as const };
+  });
+}
+
 
 export class FirebaseProjectRepository implements ProjectRepository {
   private getCollectionRef() {
@@ -14,8 +35,12 @@ export class FirebaseProjectRepository implements ProjectRepository {
     
     if (isSuperAdmin) {
       const snap = await getDocs(colRef);
-      return snap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Project));
+      return snap.docs.map(doc => {
+        const p = { id: doc.id, ...doc.data() } as Project;
+        return { ...p, columns: inferColumnRoles(p.columns || []) };
+      });
     }
+
     
     const qPublic = query(colRef, where('visibility', '==', 'public'));
     const qOwner = query(colRef, where('ownerUid', '==', userUid));
@@ -32,10 +57,12 @@ export class FirebaseProjectRepository implements ProjectRepository {
     const addDocs = (docs: any[]) => {
       docs.forEach(doc => {
         if (!projectsMap.has(doc.id)) {
-          projectsMap.set(doc.id, { id: doc.id, ...doc.data() } as Project);
+          const p = { id: doc.id, ...doc.data() } as Project;
+          projectsMap.set(doc.id, { ...p, columns: inferColumnRoles(p.columns || []) });
         }
       });
     };
+
     
     addDocs(snapPublic.docs || []);
     addDocs(snapOwner.docs || []);
@@ -48,8 +75,10 @@ export class FirebaseProjectRepository implements ProjectRepository {
     const docRef = doc(this.getCollectionRef(), projectId);
     const snapshot = await getDoc(docRef);
     if (!snapshot.exists()) return null;
-    return { id: snapshot.id, ...snapshot.data() } as Project;
+    const p = { id: snapshot.id, ...snapshot.data() } as Project;
+    return { ...p, columns: inferColumnRoles(p.columns || []) };
   }
+
 
   async createProject(projectData: Omit<Project, 'id' | 'updatedAt'>): Promise<string> {
     // Generates a canonical ID from the name as per original logic

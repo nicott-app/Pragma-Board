@@ -5,7 +5,8 @@ import { useUIStore } from '../../../application/store/useUIStore';
 import { useToastStore } from '../../../application/store/useToastStore';
 import { Ticket } from '../../../domain/models/Ticket';
 import { useDailyGeneration } from '../../../application/hooks/useDailyGeneration';
-import '../../../styles/daily.css'; // Mover estilos inline print aquí
+import { toTimestampMs } from '../../../lib/dateUtils';
+import '../../../styles/daily.css';
 
 export const DailyDrawer: React.FC = () => {
   const activeProject = useProjectStore(s => s.activeProject);
@@ -20,36 +21,65 @@ export const DailyDrawer: React.FC = () => {
 
   const { summary, isGenerating, generateDaily } = useDailyGeneration();
 
-
   const filteredTickets = useMemo(() => {
     return tickets.filter(t => selectedMember === 'all' || t.assignees?.includes(selectedMember));
   }, [tickets, selectedMember]);
 
   if (!activeProject) return null;
 
-  const analysisDate = new Date();
-  analysisDate.setHours(analysisDate.getHours() - periodHours);
-  const analysisIso = analysisDate.toISOString();
+  // ─── Column role classification ───────────────────────────────────────────
+  // Columns always have an inferred `role` by the time they reach the store
+  // (set by FirebaseProjectRepository.inferColumnRoles), so we can rely on it.
+  const doneColumns = activeProject.columns.filter(c => c.role === 'done');
+  const doneColumnIds = new Set(doneColumns.map(c => c.id));
+  const activeColumns = activeProject.columns.filter(c => c.role === 'active');
 
-  const statuses = activeProject.columns.map(c => c.id);
-  const doneStatus = statuses[statuses.length - 1];
 
-  const done = filteredTickets.filter(t => t.status === doneStatus && t.updatedAt && t.updatedAt >= analysisIso);
-  const inProgress = filteredTickets.filter(t => t.status !== doneStatus && t.status !== 'backlog' && t.status !== 'blocked' && !t.isBlocked);
+  // ─── Time window ──────────────────────────────────────────────────────────
+  // Use toTimestampMs so comparisons work regardless of whether updatedAt is
+  // a Firebase Timestamp, a plain { seconds, nanoseconds } object, or an ISO
+  // string.  The normalisation in FirebaseTicketRepository.subscribeToTickets
+  // means they will normally be ISO strings, but we stay defensive here.
+  const analysisMs = Date.now() - periodHours * 60 * 60 * 1000;
+
+  // ─── Ticket buckets ───────────────────────────────────────────────────────
+  const done = filteredTickets.filter(t =>
+    doneColumnIds.has(t.status) &&
+    toTimestampMs(t.updatedAt) >= analysisMs
+  );
+
+  // One bucket per active column, preserving board order
+  const wipByColumn = activeColumns.map(col => ({
+    id: col.id,
+    label: col.label,
+    emoji: col.emoji || '🔄',
+    tickets: filteredTickets.filter(t =>
+      t.status === col.id && !t.isBlocked
+    ),
+  }));
+
+  // Blocked tickets are displayed separately regardless of which column they are in
   const blocked = filteredTickets.filter(t => t.isBlocked || t.status === 'blocked');
 
-  // Compute days blocked helper
+  const totalActiveTickets = wipByColumn.reduce((n, col) => n + col.tickets.length, 0);
+
+  // ─── Helpers ──────────────────────────────────────────────────────────────
   const getBlockedDurationDays = (t: Ticket) => {
     if (!t.isBlocked && t.status !== 'blocked') return 0;
     const history = t.history || [];
-    const blockedEntries = history.filter(h => h.action.toLowerCase().includes('blocked') || h.action.toLowerCase().includes('bloqueado'));
-    const timestamp = blockedEntries.length > 0 ? blockedEntries[blockedEntries.length - 1].timestamp : t.updatedAt || t.createdAt;
-    const diff = Date.now() - new Date(timestamp).getTime();
+    const blockedEntries = history.filter(h =>
+      h.action.toLowerCase().includes('blocked') ||
+      h.action.toLowerCase().includes('bloqueado')
+    );
+    const timestamp = blockedEntries.length > 0
+      ? blockedEntries[blockedEntries.length - 1].timestamp
+      : t.updatedAt || t.createdAt;
+    const diff = Date.now() - toTimestampMs(timestamp);
     return Math.floor(diff / (1000 * 60 * 60 * 24));
   };
 
   const handleGenerate = () => {
-    generateDaily(periodHours, done, inProgress, blocked);
+    generateDaily(periodHours, done, wipByColumn, blocked);
   };
 
   const handleCopy = () => {
@@ -64,24 +94,27 @@ export const DailyDrawer: React.FC = () => {
     window.print();
   };
 
-  const renderTicket = (t: Ticket, sectionStatus: 'done' | 'inProgress' | 'blocked') => {
+  // ─── Ticket card renderer ─────────────────────────────────────────────────
+  const renderTicket = (t: Ticket, sectionType: 'done' | 'active' | 'blocked') => {
     const ageDays = getBlockedDurationDays(t);
     const ageText = ageDays === 0 ? 'Bloqueado hoy' : `Hace ${ageDays} ${ageDays === 1 ? 'día' : 'días'}`;
-    
+
     let borderColor = 'var(--bd-subtle)';
-    if (sectionStatus === 'done') borderColor = 'var(--col-done)';
-    if (sectionStatus === 'inProgress') borderColor = '#3b82f6';
-    if (sectionStatus === 'blocked') borderColor = 'var(--error)';
+    if (sectionType === 'done') borderColor = 'var(--col-done)';
+    if (sectionType === 'active') borderColor = '#3b82f6';
+    if (sectionType === 'blocked') borderColor = 'var(--error)';
 
     return (
-      <div 
+      <div
         key={t.id}
         onClick={() => { setOpenTicketId(t.id); setDailyOpen(false); }}
         className="print-ticket daily-ticket-card"
         style={{ borderLeftColor: borderColor }}
       >
         <div className="d-flex justify-between align-center">
-          <span style={{ fontSize: '0.75rem', color: 'var(--tx-muted)', fontWeight: 600 }}>{t.code ? `#${t.code}` : `#${t.id.substring(0, 8)}`}</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--tx-muted)', fontWeight: 600 }}>
+            {t.code ? `#${t.code}` : `#${t.id.substring(0, 8)}`}
+          </span>
           {t.assignees && t.assignees.length > 0 && (
             <span style={{ fontSize: '0.75rem', color: 'var(--tx-secondary)' }}>
               {activeProject.members.find(m => m.id === t.assignees[0])?.name}
@@ -89,7 +122,7 @@ export const DailyDrawer: React.FC = () => {
           )}
         </div>
         <span style={{ fontSize: '0.875rem', color: 'var(--tx-primary)', lineHeight: 1.3 }}>{t.title}</span>
-        {sectionStatus === 'blocked' && (
+        {sectionType === 'blocked' && (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', color: 'var(--error)', marginTop: '0.25rem' }}>
             <span>⚠️ {t.blockerReason || 'Sin motivo'}</span>
             <span style={{ color: 'var(--warning)', fontWeight: 600 }}>{ageText}</span>
@@ -99,10 +132,11 @@ export const DailyDrawer: React.FC = () => {
     );
   };
 
+  // ─── Render ───────────────────────────────────────────────────────────────
   return (
     <div className="overlay active print-overlay" style={{ zIndex: 150, justifyContent: 'flex-end', alignItems: 'stretch' }}>
       <div className="drawer drawer-print-container daily-drawer">
-        
+
         {/* Header */}
         <div className="daily-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -120,7 +154,7 @@ export const DailyDrawer: React.FC = () => {
 
         {/* Body */}
         <div className="print-content daily-body">
-          
+
           <div className="no-print daily-filters">
             <div className="form-group" style={{ flex: 1 }}>
               <label className="form-label">Periodo</label>
@@ -146,17 +180,14 @@ export const DailyDrawer: React.FC = () => {
               <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--tx-primary)' }}>✨ Resumen IA</span>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
                 {summary && (
-                  <button 
-                    className="btn btn-secondary btn-sm" 
-                    onClick={handleCopy}
-                  >
+                  <button className="btn btn-secondary btn-sm" onClick={handleCopy}>
                     {copied ? '✓ Copiado' : '📋 Copiar'}
                   </button>
                 )}
-                <button 
-                  className="btn btn-primary btn-sm" 
-                  onClick={handleGenerate} 
-                  disabled={isGenerating || (done.length === 0 && inProgress.length === 0 && blocked.length === 0)}
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={handleGenerate}
+                  disabled={isGenerating || (done.length === 0 && totalActiveTickets === 0 && blocked.length === 0)}
                 >
                   {isGenerating ? 'Generando...' : 'Generar'}
                 </button>
@@ -169,25 +200,39 @@ export const DailyDrawer: React.FC = () => {
             )}
           </div>
 
+          {/* ── Completed ── */}
           <div className="print-category">
             <h3 style={{ fontSize: '0.875rem', color: 'var(--success)', margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <span>✅</span> Completados ({done.length})
             </h3>
-            {done.length > 0 ? done.map(t => renderTicket(t, 'done')) : <p style={{ fontSize: '0.875rem', color: 'var(--tx-muted)' }}>No hay tickets completados.</p>}
+            {done.length > 0
+              ? done.map(t => renderTicket(t, 'done'))
+              : <p style={{ fontSize: '0.875rem', color: 'var(--tx-muted)' }}>No hay tickets completados en las últimas {periodHours}h.</p>
+            }
           </div>
 
-          <div className="print-category">
-            <h3 style={{ fontSize: '0.875rem', color: '#3b82f6', margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span>🔄</span> En Progreso ({inProgress.length})
-            </h3>
-            {inProgress.length > 0 ? inProgress.map(t => renderTicket(t, 'inProgress')) : <p style={{ fontSize: '0.875rem', color: 'var(--tx-muted)' }}>No hay tickets en progreso.</p>}
-          </div>
+          {/* ── One section per active column ── */}
+          {wipByColumn.map(col => (
+            <div key={col.id} className="print-category">
+              <h3 style={{ fontSize: '0.875rem', color: '#3b82f6', margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span>{col.emoji}</span> {col.label} ({col.tickets.length})
+              </h3>
+              {col.tickets.length > 0
+                ? col.tickets.map(t => renderTicket(t, 'active'))
+                : <p style={{ fontSize: '0.875rem', color: 'var(--tx-muted)' }}>No hay tickets en esta columna.</p>
+              }
+            </div>
+          ))}
 
+          {/* ── Blocked ── */}
           <div className="print-category">
             <h3 style={{ fontSize: '0.875rem', color: 'var(--error)', margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <span>⚠️</span> Impedimentos ({blocked.length})
             </h3>
-            {blocked.length > 0 ? blocked.map(t => renderTicket(t, 'blocked')) : <p style={{ fontSize: '0.875rem', color: 'var(--tx-muted)' }}>Sin impedimentos 🎉</p>}
+            {blocked.length > 0
+              ? blocked.map(t => renderTicket(t, 'blocked'))
+              : <p style={{ fontSize: '0.875rem', color: 'var(--tx-muted)' }}>Sin impedimentos 🎉</p>
+            }
           </div>
 
         </div>

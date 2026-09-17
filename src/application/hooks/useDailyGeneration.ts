@@ -86,21 +86,38 @@ export const useDailyGeneration = () => {
     return details;
   };
 
-  const generateDaily = async (periodHours: number, done: Ticket[], inProgress: Ticket[], blocked: Ticket[]) => {
+  const generateDaily = async (
+    periodHours: number,
+    done: Ticket[],
+    wipByColumn: { label: string; emoji: string; tickets: Ticket[] }[],
+    blocked: Ticket[]
+  ) => {
     if (!activeProject) return;
     
     setIsGenerating(true);
     setSummary('Generando resumen con IA...');
     
     const effectiveApiKey = import.meta.env.VITE_GEMINI_API_KEY || activeProject.geminiApiKey || geminiApiKey;
+
+    // Flatten all active tickets for legacy fallback
+    const inProgress = wipByColumn.flatMap(col => col.tickets);
     
     if (effectiveApiKey) {
       try {
         const dateStr = new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         
         const doneText = done.length ? done.map(formatDoneTicket).join('\n') : 'Ninguno';
-        const wipText = inProgress.length ? inProgress.map(formatWipTicket).join('\n') : 'Ninguno';
         const blockedText = blocked.length ? blocked.map(formatBlockedTicket).join('\n') : 'Ninguno';
+
+        // Build WIP section per column so the AI knows the exact workflow stage
+        const wipText = wipByColumn.length > 0
+          ? wipByColumn.map(col => {
+              const colTickets = col.tickets.length
+                ? col.tickets.map(formatWipTicket).join('\n')
+                : '  (ninguno)';
+              return `[${col.emoji} ${col.label}]\n${colTickets}`;
+            }).join('\n\n')
+          : 'Ninguno';
 
         const prompt = `Eres un Scrum Master y Project Manager experto en comunicación ágil y concisa.
 Genera un resumen ejecutivo de la daily standup de hoy en español para el proyecto "${activeProject.name}".
@@ -110,7 +127,7 @@ REGLAS IMPORTANTES:
 1. Haz un resumen elaborado pero fácil de leer. No te limites a copiar y pegar, sino que redacta de forma fluida y natural aportando valor, pero manteniéndolo lo suficientemente breve como para leerse rápido en Slack/Teams.
 2. Céntrate estrictamente en la información real proporcionada. Extrae jugo a los comentarios recientes, movimientos entre columnas y cambios de estado para dar contexto de en qué punto exacto están las cosas.
 3. Para cada tarea completada, resume la labor realizada (basándote en los comentarios o título), horas empleadas, y menciona en qué otra(s) tarea(s) está trabajando ahora el desarrollador.
-4. Para cada tarea en progreso, menciona el estado de avance, desde dónde y cuándo se movió la tarjeta, e incorpora un resumen conciso de los últimos comentarios para dar contexto del progreso actual.
+4. Para cada tarea en progreso, menciona el estado de avance, el nombre de la columna en la que se encuentra (p.ej. "En Revisión", "En Progreso", "QA"), desde dónde y cuándo se movió la tarjeta, e incorpora un resumen conciso de los últimos comentarios para dar contexto del progreso actual.
 5. Para cada tarea bloqueada, explica claramente por qué está bloqueada y resume si hay alguna discusión reciente en los comentarios para solucionarlo.
 6. Utiliza SIEMPRE los identificadores de ticket cortos proporcionados (ej. [DA-026] o [3F1A2B]).
 
@@ -119,7 +136,7 @@ Aquí tienes los datos reales del proyecto de las últimas ${periodHours} horas:
 TICKETS COMPLETADOS EN LAS ÚLTIMAS ${periodHours} HORAS:
 ${doneText}
 
-TICKETS EN PROGRESO AHORA:
+TICKETS ACTIVOS (agrupados por columna del tablero):
 ${wipText}
 
 TICKETS BLOQUEADOS / IMPEDIMENTOS:
@@ -131,7 +148,7 @@ Genera el resumen estructurado en español usando el siguiente formato:
 - [Lista concisa de logros con detalles de asignación, fechas de desarrollo, horas consumidas y tareas siguientes del desarrollador asignado]
 
 🔄 **Trabajo en Curso y Novedades**
-- [Lista concisa de lo que está en progreso ahora con fechas de inicio, fechas previstas de entrega, progreso en horas/SP con su % y comentarios recientes relevantes]
+- [Lista concisa de lo que está activo ahora, indicando en qué columna está cada ticket (p.ej. "En Revisión", "En Progreso"), fechas de inicio, fechas previstas de entrega, progreso en horas/SP con su % y comentarios recientes relevantes]
 
 ⚠️ **Impedimentos y Bloqueos**
 - [Lista de tickets bloqueados indicando su ID, título, responsable, fecha desde cuándo está bloqueado, motivo y comentarios desde el bloqueo]
@@ -182,3 +199,4 @@ Escribe en formato markdown limpio y directo.`;
 
   return { summary, isGenerating, generateDaily };
 };
+
