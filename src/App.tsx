@@ -263,12 +263,14 @@ function App() {
               {isVacationsOpen && <VacationsModal />}
               {isNotesOpen && <NotesFloatingWindow />}
               {isPbipDocOpen && <PbipDocumentationModal />}
-              {isPrivacyOpen && <PrivacyPolicyModal />}
             </Suspense>
           </>
         )}
         <ToastContainer />
         <CookieBanner />
+        <Suspense fallback={null}>
+          {isPrivacyOpen && <PrivacyPolicyModal />}
+        </Suspense>
       </div>
     </Layout>
   );
