@@ -4,7 +4,6 @@ import './LandingPage.css';
 
 export const LandingPage: React.FC = () => {
   const setLoginOpen = useUIStore((s) => s.setLoginOpen);
-  const theme = useUIStore((s) => s.theme);
   const toggleTheme = useUIStore((s) => s.toggleTheme);
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
