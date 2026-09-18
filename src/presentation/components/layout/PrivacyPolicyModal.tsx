@@ -17,41 +17,41 @@ export const PrivacyPolicyModal: React.FC = () => {
         </div>
 
         {/* Body */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem', color: 'var(--tx-secondary)', fontSize: '0.9rem', lineHeight: 1.6 }}>
-          <h3 style={{ color: 'var(--tx-primary)', marginTop: 0 }}>1. Recopilación de Datos (GDPR)</h3>
-          <p>
+        <div style={{ flex: 1, overflowY: 'auto', padding: '2rem', color: 'var(--tx-secondary)', fontSize: '0.95rem', lineHeight: 1.6 }}>
+          <h3 style={{ color: 'var(--tx-primary)', margin: '0 0 0.75rem 0' }}>1. Recopilación de Datos (GDPR)</h3>
+          <p style={{ margin: '0 0 1rem 0' }}>
             En <strong>Sprinto</strong>, respetamos su privacidad. Solo recopilamos los datos estrictamente necesarios para el funcionamiento del servicio. Esto incluye:
           </p>
-          <ul>
-            <li>Direcciones de correo electrónico (para inicio de sesión y asignación de tareas).</li>
-            <li>Nombres de usuario o apodos proporcionados por el usuario.</li>
+          <ul style={{ margin: '0 0 2rem 1.5rem' }}>
+            <li style={{ marginBottom: '0.5rem' }}>Direcciones de correo electrónico (para inicio de sesión y asignación de tareas).</li>
+            <li style={{ marginBottom: '0.5rem' }}>Nombres de usuario o apodos proporcionados por el usuario.</li>
             <li>El contenido explícito introducido en la plataforma (tickets, comentarios, tableros).</li>
           </ul>
           
-          <h3 style={{ color: 'var(--tx-primary)' }}>2. Uso de la Inteligencia Artificial (BYOK)</h3>
-          <p>
+          <h3 style={{ color: 'var(--tx-primary)', margin: '0 0 0.75rem 0' }}>2. Uso de la Inteligencia Artificial (BYOK)</h3>
+          <p style={{ margin: '0 0 2rem 0' }}>
             Nuestra plataforma utiliza integraciones con modelos de IA (Gemini). Sprinto opera bajo un modelo <em>Bring Your Own Key</em> (Trae tu propia clave).
             Las claves API que introduzcas en la plataforma se cifran en tu propio navegador usando encriptación AES-256 antes de guardarse en nuestra base de datos.
             Sprinto no tiene acceso al texto plano de tus claves y no se hace responsable del coste que se derive de su uso en Google Cloud o AI Studio.
           </p>
 
-          <h3 style={{ color: 'var(--tx-primary)' }}>3. Uso de Cookies</h3>
-          <p>
+          <h3 style={{ color: 'var(--tx-primary)', margin: '0 0 0.75rem 0' }}>3. Uso de Cookies</h3>
+          <p style={{ margin: '0 0 1rem 0' }}>
             Utilizamos <strong>exclusivamente cookies técnicas y de sesión</strong>. No utilizamos cookies de rastreo, de terceros, ni de analíticas publicitarias. Las cookies presentes sirven para:
           </p>
-          <ul>
-            <li>Mantener su sesión de usuario activa (Firebase Auth).</li>
+          <ul style={{ margin: '0 0 2rem 1.5rem' }}>
+            <li style={{ marginBottom: '0.5rem' }}>Mantener su sesión de usuario activa (Firebase Auth).</li>
             <li>Guardar sus preferencias de interfaz (modo oscuro, filtros seleccionados) a través del almacenamiento local del navegador.</li>
           </ul>
 
-          <h3 style={{ color: 'var(--tx-primary)' }}>4. Eliminación de Datos (Derecho al olvido)</h3>
-          <p>
+          <h3 style={{ color: 'var(--tx-primary)', margin: '0 0 0.75rem 0' }}>4. Eliminación de Datos (Derecho al olvido)</h3>
+          <p style={{ margin: '0 0 2rem 0' }}>
             En cumplimiento del Reglamento General de Protección de Datos (GDPR), usted tiene derecho a la eliminación completa de sus datos. 
             Puede ejercer este derecho directamente desde la plataforma (Configuración del Perfil &gt; Eliminar mi cuenta), lo que desencadenará el borrado permanente de su usuario de nuestros sistemas de autenticación.
           </p>
 
-          <h3 style={{ color: 'var(--tx-primary)' }}>5. Almacenamiento y Seguridad</h3>
-          <p>
+          <h3 style={{ color: 'var(--tx-primary)', margin: '0 0 0.75rem 0' }}>5. Almacenamiento y Seguridad</h3>
+          <p style={{ margin: '0 0 1rem 0' }}>
             Los datos se almacenan de forma segura utilizando la infraestructura de Google Cloud (Firebase). 
             La plataforma utiliza un modelo multitenant donde el acceso a la información está estrictamente limitado a los miembros autorizados por los administradores de cada proyecto mediante Reglas de Seguridad (Firestore Security Rules).
           </p>

@@ -40,12 +40,15 @@ export const PreferencesSettingsTab: React.FC = () => {
   };
 
   const handleDeleteAccount = async () => {
-    const confirm1 = window.confirm(
-      '⚠️ ATENCIÓN: Estás a punto de ELIMINAR tu cuenta de forma PERMANENTE.\n\nEsto borrará tu perfil, configuración y acceso a todos los proyectos.\n¿Estás seguro de que quieres continuar?'
+    const { useDialogStore } = await import('../../../../application/store/useDialogStore');
+    const confirm1 = await useDialogStore.getState().showConfirm(
+      '⚠️ ELIMINAR CUENTA',
+      'Estás a punto de ELIMINAR tu cuenta de forma PERMANENTE.\n\nEsto borrará tu perfil, configuración y acceso a todos los proyectos.\n¿Estás seguro de que quieres continuar?'
     );
     if (!confirm1) return;
 
-    const confirm2 = window.prompt(
+    const confirm2 = await useDialogStore.getState().showPrompt(
+      'Confirmación Final',
       'Para confirmar la eliminación, escribe "ELIMINAR" en mayúsculas:'
     );
     if (confirm2 !== 'ELIMINAR') {

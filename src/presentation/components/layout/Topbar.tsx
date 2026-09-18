@@ -264,7 +264,9 @@ export const Topbar: React.FC = () => {
             <button
               className="btn btn-sm"
               onClick={async () => {
-                if (window.confirm('¿Seguro que quieres cerrar sesión?')) {
+                const { useDialogStore } = await import('../../../application/store/useDialogStore');
+                const confirm = await useDialogStore.getState().showConfirm('Cerrar sesión', '¿Seguro que quieres cerrar sesión?');
+                if (confirm) {
                   await new FirebaseAuthService().logout();
                 }
               }}
