@@ -1,10 +1,12 @@
 import { LoggerService } from '../../../infrastructure/services/LoggerService';
 import React, { useState } from 'react';
 import { FirebaseAuthService } from '../../../infrastructure/firebase/FirebaseAuthService';
+import { useUIStore } from '../../../application/store/useUIStore';
 
 const authService = new FirebaseAuthService();
 
 export const LoginModal: React.FC = () => {
+  const setLoginOpen = useUIStore(s => s.setLoginOpen);
   const [isRegister, setIsRegister] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -26,6 +28,7 @@ export const LoginModal: React.FC = () => {
       } else {
         await authService.login(email, password);
       }
+      setLoginOpen(false);
     } catch (err: unknown) {
       LoggerService.error(err);
       setError((err as Error).message || 'Error al procesar la solicitud');
@@ -36,7 +39,14 @@ export const LoginModal: React.FC = () => {
 
   return (
     <div id="auth-overlay" className="overlay active">
-      <div id="auth-modal" className="modal" style={{ width: 'min(440px,96vw)', padding: '2.25rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <div id="auth-modal" className="modal" style={{ position: 'relative', width: 'min(440px,96vw)', padding: '2.25rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <button 
+          className="modal-close" 
+          onClick={() => setLoginOpen(false)}
+          style={{ position: 'absolute', top: '1rem', right: '1rem' }}
+        >
+          ✕
+        </button>
         <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
           <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>🔐</div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--tx-primary)', marginBottom: '0.25rem' }}>

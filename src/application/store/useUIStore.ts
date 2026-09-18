@@ -37,6 +37,8 @@ export interface UIStore {
   setPrivacyOpen: (isOpen: boolean) => void;
   isOnboardingOpen: boolean;
   setOnboardingOpen: (isOpen: boolean) => void;
+  isLoginOpen: boolean;
+  setLoginOpen: (isOpen: boolean) => void;
   
   filterSearchQuery: string;
   setFilterSearchQuery: (query: string) => void;
@@ -100,6 +102,8 @@ export const useUIStore = create<UIStore>()(
       setPrivacyOpen: (isOpen) => set({ isPrivacyOpen: isOpen }),
       isOnboardingOpen: false,
       setOnboardingOpen: (isOpen) => set({ isOnboardingOpen: isOpen }),
+      isLoginOpen: false,
+      setLoginOpen: (isOpen) => set({ isLoginOpen: isOpen }),
 
       filterSearchQuery: '',
       setFilterSearchQuery: (query) => set({ filterSearchQuery: query }),

@@ -12,6 +12,7 @@ import { FirebaseAuthService } from './infrastructure/firebase/FirebaseAuthServi
 import { LoginModal } from './presentation/components/auth/LoginModal';
 import { PendingApprovalScreen } from './presentation/components/auth/PendingApprovalScreen';
 import { CookieBanner } from './presentation/components/layout/CookieBanner';
+import { LandingPage } from './presentation/components/layout/LandingPage';
 import { Suspense, lazy } from 'react';
 
 const PrivacyPolicyModal = lazy(() =>
@@ -116,6 +117,7 @@ function App() {
   const isPbipDocOpen = useUIStore((s) => s.isPbipDocOpen);
   const isPrivacyOpen = useUIStore((s) => s.isPrivacyOpen);
   const isOnboardingOpen = useUIStore((s) => s.isOnboardingOpen);
+  const isLoginOpen = useUIStore((s) => s.isLoginOpen);
   const uiTheme = useUIStore((s) => s.theme);
   const activeProject = useProjectStore((s) => s.activeProject);
   const setActiveProject = useProjectStore((s) => s.setActiveProject);
@@ -204,12 +206,24 @@ function App() {
     };
   }, [activeProject?.id]);
 
+  if (!currentUser) {
+    return (
+      <>
+        <LandingPage />
+        {isLoginOpen && <LoginModal />}
+        <ToastContainer />
+        <CookieBanner />
+        <Suspense fallback={null}>
+          {isPrivacyOpen && <PrivacyPolicyModal />}
+        </Suspense>
+      </>
+    );
+  }
+
   return (
     <Layout>
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-        {!currentUser ? (
-          <LoginModal />
-        ) : currentUser.isApproved === false ? (
+        {currentUser.isApproved === false ? (
           <PendingApprovalScreen />
         ) : !activeProject ? (
           <div style={{ padding: '2rem', textAlign: 'center' }}>
