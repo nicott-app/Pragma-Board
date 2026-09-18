@@ -6,16 +6,14 @@ describe('useProjectStore', () => {
     // Reset state before each test
     useProjectStore.setState({
       activeProject: null,
-      projects: [],
-      loading: false,
+      activeProjectId: null,
     });
   });
 
-  it('should initialize with null activeProject and empty projects', () => {
+  it('should initialize with null activeProject', () => {
     const state = useProjectStore.getState();
     expect(state.activeProject).toBeNull();
-    expect(state.projects).toEqual([]);
-    expect(state.loading).toBeFalsy();
+    expect(state.activeProjectId).toBeNull();
   });
 
   it('should set active project', () => {

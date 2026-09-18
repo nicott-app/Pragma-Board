@@ -115,9 +115,23 @@ export const LoginModal: React.FC = () => {
           <button 
             type="button" 
             onClick={() => { setIsRegister(!isRegister); setError(null); }}
-            style={{ background: 'none', border: 'none', color: 'var(--accent)', cursor: 'pointer', fontSize: '0.875rem' }}
+            style={{ background: 'none', border: 'none', color: 'var(--ac)', cursor: 'pointer', fontSize: '0.875rem' }}
           >
             {isRegister ? '¿Ya tienes cuenta? Inicia sesión' : '¿No tienes cuenta? Solicita acceso'}
+          </button>
+        </div>
+
+        <div style={{ textAlign: 'center', marginTop: '1rem', borderTop: '1px solid var(--bd-subtle)', paddingTop: '1rem' }}>
+          <button 
+            type="button" 
+            onClick={() => {
+              import('../../../application/store/useUIStore').then(({ useUIStore }) => {
+                useUIStore.getState().setPrivacyOpen(true);
+              });
+            }}
+            style={{ background: 'none', border: 'none', color: 'var(--tx-secondary)', cursor: 'pointer', fontSize: '0.75rem', textDecoration: 'underline' }}
+          >
+            Términos y Política de Privacidad
           </button>
         </div>
       </div>

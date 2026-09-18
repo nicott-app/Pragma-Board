@@ -28,6 +28,18 @@ export class FirebaseAuthService {
     await signOut(auth);
   }
 
+  async deleteCurrentUser(): Promise<void> {
+    const user = auth.currentUser;
+    if (user) {
+      // Import deleteUser dynamically to avoid changing top-level imports heavily if not needed,
+      // but actually we can just use deleteUser from firebase/auth.
+      const { deleteUser } = await import('firebase/auth');
+      await deleteUser(user);
+    } else {
+      throw new Error('No hay usuario autenticado');
+    }
+  }
+
   onAuthStateChanged(callback: (user: User | null) => void): () => void {
     return onAuthStateChanged(auth, async (fbUser) => {
       if (fbUser) {

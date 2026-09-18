@@ -11,7 +11,14 @@ import { useDataStore } from './application/store/useDataStore';
 import { FirebaseAuthService } from './infrastructure/firebase/FirebaseAuthService';
 import { LoginModal } from './presentation/components/auth/LoginModal';
 import { PendingApprovalScreen } from './presentation/components/auth/PendingApprovalScreen';
+import { CookieBanner } from './presentation/components/layout/CookieBanner';
 import { Suspense, lazy } from 'react';
+
+const PrivacyPolicyModal = lazy(() =>
+  import('./presentation/components/layout/PrivacyPolicyModal').then((m) => ({
+    default: m.PrivacyPolicyModal,
+  }))
+);
 
 // Lazy loaded modals for code splitting
 const SmartCreateModal = lazy(() =>
@@ -102,6 +109,7 @@ function App() {
   const isNotesOpen = useUIStore((s) => s.isNotesOpen);
   const isUsersAdminOpen = useUIStore((s) => s.isUsersAdminOpen);
   const isPbipDocOpen = useUIStore((s) => s.isPbipDocOpen);
+  const isPrivacyOpen = useUIStore((s) => s.isPrivacyOpen);
   const uiTheme = useUIStore((s) => s.theme);
   const activeProject = useProjectStore((s) => s.activeProject);
   const setActiveProject = useProjectStore((s) => s.setActiveProject);
@@ -255,10 +263,12 @@ function App() {
               {isVacationsOpen && <VacationsModal />}
               {isNotesOpen && <NotesFloatingWindow />}
               {isPbipDocOpen && <PbipDocumentationModal />}
+              {isPrivacyOpen && <PrivacyPolicyModal />}
             </Suspense>
           </>
         )}
         <ToastContainer />
+        <CookieBanner />
       </div>
     </Layout>
   );

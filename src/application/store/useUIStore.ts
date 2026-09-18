@@ -33,6 +33,8 @@ export interface UIStore {
   setUsersAdminOpen: (isOpen: boolean) => void;
   isPbipDocOpen: boolean;
   setPbipDocOpen: (isOpen: boolean) => void;
+  isPrivacyOpen: boolean;
+  setPrivacyOpen: (isOpen: boolean) => void;
   
   filterSearchQuery: string;
   setFilterSearchQuery: (query: string) => void;
@@ -92,6 +94,8 @@ export const useUIStore = create<UIStore>()(
       setUsersAdminOpen: (isOpen) => set({ isUsersAdminOpen: isOpen }),
       isPbipDocOpen: false,
       setPbipDocOpen: (isOpen) => set({ isPbipDocOpen: isOpen }),
+      isPrivacyOpen: false,
+      setPrivacyOpen: (isOpen) => set({ isPrivacyOpen: isOpen }),
 
       filterSearchQuery: '',
       setFilterSearchQuery: (query) => set({ filterSearchQuery: query }),
