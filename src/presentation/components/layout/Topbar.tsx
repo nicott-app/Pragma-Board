@@ -182,6 +182,17 @@ export const Topbar: React.FC = () => {
         </button>
         <button
           className="btn-icon"
+          aria-label="Ayuda y Tutorial"
+          onClick={() => {
+            useUIStore.getState().setOnboardingOpen(true);
+          }}
+          title="Ayuda y Tutorial"
+          style={{ marginLeft: '0.25rem' }}
+        >
+          ❔
+        </button>
+        <button
+          className="btn-icon"
           aria-label="Configuración"
           onClick={() => setSettingsOpen(true)}
         >

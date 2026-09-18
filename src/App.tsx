@@ -19,6 +19,11 @@ const PrivacyPolicyModal = lazy(() =>
     default: m.PrivacyPolicyModal,
   }))
 );
+const OnboardingGuideModal = lazy(() =>
+  import('./presentation/components/layout/OnboardingGuideModal').then((m) => ({
+    default: m.OnboardingGuideModal,
+  }))
+);
 
 // Lazy loaded modals for code splitting
 const SmartCreateModal = lazy(() =>
@@ -110,6 +115,7 @@ function App() {
   const isUsersAdminOpen = useUIStore((s) => s.isUsersAdminOpen);
   const isPbipDocOpen = useUIStore((s) => s.isPbipDocOpen);
   const isPrivacyOpen = useUIStore((s) => s.isPrivacyOpen);
+  const isOnboardingOpen = useUIStore((s) => s.isOnboardingOpen);
   const uiTheme = useUIStore((s) => s.theme);
   const activeProject = useProjectStore((s) => s.activeProject);
   const setActiveProject = useProjectStore((s) => s.setActiveProject);
@@ -270,6 +276,7 @@ function App() {
         <CookieBanner />
         <Suspense fallback={null}>
           {isPrivacyOpen && <PrivacyPolicyModal />}
+          {isOnboardingOpen && <OnboardingGuideModal />}
         </Suspense>
       </div>
     </Layout>
