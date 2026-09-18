@@ -1,8 +1,10 @@
+import * as Sentry from "@sentry/react";
+
 /**
  * LoggerService
  * Centralized logging service for the application.
  * This wraps console methods but provides a single integration point
- * for external monitoring tools (e.g. Firebase Crashlytics, Sentry) in the future.
+ * for external monitoring tools (e.g. Sentry).
  */
 export class LoggerService {
   /**
@@ -20,18 +22,26 @@ export class LoggerService {
    */
   public static warn(message: unknown, ...optionalParams: unknown[]): void {
     console.warn(`[WARN]:`, message, ...optionalParams);
+    if (!import.meta.env.DEV && import.meta.env.VITE_SENTRY_DSN) {
+      Sentry.captureMessage(typeof message === 'string' ? message : String(message), 'warning');
+    }
   }
 
   /**
-   * Logs errors.
-   * TODO: Connect this to Firebase Crashlytics or external error tracker.
+   * Logs errors and sends them to Sentry.
    */
   public static error(message: unknown, ...optionalParams: unknown[]): void {
     console.error(`[ERROR]:`, message, ...optionalParams);
     
-    // Example of future integration:
-    // if (!import.meta.env.DEV) {
-    //   Crashlytics.recordError(message, optionalParams);
-    // }
+    if (!import.meta.env.DEV && import.meta.env.VITE_SENTRY_DSN) {
+      if (message instanceof Error) {
+        Sentry.captureException(message, { extra: { optionalParams } });
+      } else {
+        Sentry.captureMessage(String(message), {
+          level: 'error',
+          extra: { optionalParams }
+        });
+      }
+    }
   }
 }
