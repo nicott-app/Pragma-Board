@@ -4,6 +4,7 @@ import { useProjectStore } from '../../../../application/store/useProjectStore';
 import { useAuthStore } from '../../../../application/store/useAuthStore';
 import { useToastStore } from '../../../../application/store/useToastStore';
 import { FirebaseProjectRepository } from '../../../../infrastructure/firebase/FirebaseProjectRepository';
+import { encryptApiKey, decryptApiKey } from '../../../../lib/cryptoUtils';
 
 const projectRepo = new FirebaseProjectRepository();
 
@@ -16,7 +17,9 @@ export const IntegrationsSettingsTab: React.FC<Props> = ({ isAdmin }) => {
   const setActiveProject = useProjectStore((s) => s.setActiveProject);
 
   const [teamsWebhookUrl, setTeamsWebhookUrl] = useState(activeProject?.teamsWebhookUrl || '');
-  const [geminiApiKey, setGeminiApiKey] = useState(activeProject?.geminiApiKey || '');
+  const [geminiApiKey, setGeminiApiKey] = useState(() => 
+    activeProject?.geminiApiKey ? decryptApiKey(activeProject.geminiApiKey, activeProject.ownerUid || '') : ''
+  );
   const [testingWebhook, setTestingWebhook] = useState(false);
 
   if (!activeProject) return null;
@@ -33,14 +36,16 @@ export const IntegrationsSettingsTab: React.FC<Props> = ({ isAdmin }) => {
       return;
     }
     try {
+      const encryptedKey = encryptApiKey(geminiApiKey, activeProject.ownerUid || '');
+      
       await projectRepo.updateProject(activeProject.id, {
         teamsWebhookUrl,
-        geminiApiKey,
+        geminiApiKey: encryptedKey,
       });
       setActiveProject({
         ...activeProject,
         teamsWebhookUrl,
-        geminiApiKey,
+        geminiApiKey: encryptedKey,
       });
       useToastStore
         .getState()
@@ -64,7 +69,7 @@ export const IntegrationsSettingsTab: React.FC<Props> = ({ isAdmin }) => {
 
       if (projWithKeys) {
         if (projWithKeys.teamsWebhookUrl) setTeamsWebhookUrl(projWithKeys.teamsWebhookUrl);
-        if (projWithKeys.geminiApiKey) setGeminiApiKey(projWithKeys.geminiApiKey);
+        if (projWithKeys.geminiApiKey) setGeminiApiKey(decryptApiKey(projWithKeys.geminiApiKey, projWithKeys.ownerUid || ''));
         useToastStore
           .getState()
           .addToast('success', 'Claves recuperadas del proyecto: ' + projWithKeys.name, 'Éxito');
@@ -178,51 +183,49 @@ export const IntegrationsSettingsTab: React.FC<Props> = ({ isAdmin }) => {
         />
       </div>
 
-      {useAuthStore.getState().currentUser?.email === 'ntercerotuda@gmail.com' && (
-        <div className="form-group" style={{ marginTop: '0.5rem' }}>
-          <label
-            className="form-label"
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+      <div className="form-group" style={{ marginTop: '0.5rem' }}>
+        <label
+          className="form-label"
+          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+        >
+          Google Gemini / Groq Llama (API Key)
+        </label>
+        <p
+          style={{
+            fontSize: '0.875rem',
+            color: 'var(--tx-secondary)',
+            marginTop: '-0.5rem',
+            marginBottom: '0.5rem',
+          }}
+        >
+          Consigue tu clave gratis en{' '}
+          <a
+            href="https://aistudio.google.com/"
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: 'var(--ac)' }}
           >
-            Google Gemini / Groq Llama (API Key)
-          </label>
-          <p
-            style={{
-              fontSize: '0.875rem',
-              color: 'var(--tx-secondary)',
-              marginTop: '-0.5rem',
-              marginBottom: '0.5rem',
-            }}
+            Google AI Studio
+          </a>
+          . Si Google no ofrece capa gratuita en tu país, puedes usar una clave gratuita de{' '}
+          <a
+            href="https://console.groq.com/keys"
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: 'var(--ac)' }}
           >
-            Consigue tu clave gratis en{' '}
-            <a
-              href="https://aistudio.google.com/"
-              target="_blank"
-              rel="noreferrer"
-              style={{ color: 'var(--ac)' }}
-            >
-              Google AI Studio
-            </a>
-            . Si Google no ofrece capa gratuita en tu país, puedes usar una clave gratuita de{' '}
-            <a
-              href="https://console.groq.com/keys"
-              target="_blank"
-              rel="noreferrer"
-              style={{ color: 'var(--ac)' }}
-            >
-              Groq (Llama 3)
-            </a>
-            . Al pegarla aquí (empieza por gsk_), la app lo detectará automáticamente.
-          </p>
-          <input
-            type="password"
-            className="form-input"
-            value={geminiApiKey}
-            onChange={(e) => setGeminiApiKey(e.target.value)}
-            placeholder="AIzaSy... o gsk_..."
-          />
-        </div>
-      )}
+            Groq (Llama 3)
+          </a>
+          . Al pegarla aquí, la app la guardará de forma cifrada (AES-256).
+        </p>
+        <input
+          type="password"
+          className="form-input"
+          value={geminiApiKey}
+          onChange={(e) => setGeminiApiKey(e.target.value)}
+          placeholder="AIzaSy... o gsk_..."
+        />
+      </div>
 
       <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginTop: '1rem' }}>
         <button

@@ -52,6 +52,7 @@ export interface Project {
   webhooks: Webhook[];
   teamsWebhookUrl?: string;
   geminiApiKey?: string;
+  lastAiCallAt?: string | number;
   ticketPrefix?: string | null;
   vacationDaysPerYear?: number;
   powerbiEstimatorEnabled?: boolean;

@@ -1,13 +1,13 @@
 import { LoggerService } from '../../infrastructure/services/LoggerService';
 import { useState, useEffect } from 'react';
 import { useProjectStore } from '../store/useProjectStore';
-import { useSettingsStore } from '../store/useSettingsStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { useDataStore } from '../store/useDataStore';
 import { FirebaseTicketRepository } from '../../infrastructure/firebase/FirebaseTicketRepository';
 import { GeminiService } from '../../infrastructure/ai/GeminiService';
 import { TicketPriority, TicketType } from '../../domain/models/Ticket';
 import { useToastStore } from '../store/useToastStore';
+import { decryptApiKey } from '../../lib/cryptoUtils';
 
 export interface BulkCategory {
   id: string;
@@ -61,7 +61,6 @@ const resolveTargetStatus = (timeTense: string | undefined, columns: any[]): str
 
 export const useSmartCreate = (onClose: () => void) => {
   const activeProject = useProjectStore(s => s.activeProject);
-  const geminiApiKey = useSettingsStore(s => s.geminiApiKey);
   const currentUser = useAuthStore(s => s.currentUser);
   const tickets = useDataStore(s => s.tickets);
   const addToast = useToastStore(s => s.addToast);
@@ -130,7 +129,9 @@ export const useSmartCreate = (onClose: () => void) => {
   }, [mode, activeProject?.id]);
 
   const generateDynamicExamples = async () => {
-    const effectiveApiKey = import.meta.env.VITE_GEMINI_API_KEY || activeProject?.geminiApiKey || geminiApiKey;
+    const effectiveApiKey = activeProject?.geminiApiKey 
+      ? decryptApiKey(activeProject.geminiApiKey, activeProject.ownerUid || '')
+      : '';
     if (!effectiveApiKey || !activeProject) return;
     
     setLoadingExamples(true);
@@ -160,10 +161,12 @@ export const useSmartCreate = (onClose: () => void) => {
   const [manualSprintId, setManualSprintId] = useState<string>(activeProject?.currentSprintId || '');
 
   const handleGenerate = async () => {
-    const effectiveApiKey = import.meta.env.VITE_GEMINI_API_KEY || activeProject?.geminiApiKey || geminiApiKey;
+    const effectiveApiKey = activeProject?.geminiApiKey 
+      ? decryptApiKey(activeProject.geminiApiKey, activeProject.ownerUid || '')
+      : '';
 
     if (!prompt.trim() || !effectiveApiKey) {
-      if (!effectiveApiKey) addToast('error', 'API Key no configurada.', 'Falta Configuración');
+      if (!effectiveApiKey) addToast('error', 'API Key no configurada. Añádela en Ajustes de Proyecto.', 'Falta Configuración');
       return;
     }
 

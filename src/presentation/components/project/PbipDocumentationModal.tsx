@@ -1,15 +1,14 @@
 import React, { useRef, useState, useCallback } from 'react';
 import { useUIStore } from '../../../application/store/useUIStore';
-import { useSettingsStore } from '../../../application/store/useSettingsStore';
 import { useProjectStore } from '../../../application/store/useProjectStore';
 import { parsePbipFile, ParsedPbip } from '../../../infrastructure/parsers/PbipParser';
 import { generatePbipDocumentation } from '../../../infrastructure/ai/PbipDocumentationService';
+import { decryptApiKey } from '../../../lib/cryptoUtils';
 
 type Step = 'upload' | 'preview' | 'generating' | 'done' | 'error';
 
 export const PbipDocumentationModal: React.FC = () => {
   const setPbipDocOpen = useUIStore(s => s.setPbipDocOpen);
-  const geminiApiKey = useSettingsStore(s => s.geminiApiKey);
   const activeProject = useProjectStore(s => s.activeProject);
 
   const [step, setStep] = useState<Step>('upload');
@@ -19,7 +18,9 @@ export const PbipDocumentationModal: React.FC = () => {
   const [dragging, setDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const effectiveKey = import.meta.env.VITE_GEMINI_API_KEY || activeProject?.geminiApiKey || geminiApiKey;
+  const effectiveKey = activeProject?.geminiApiKey 
+    ? decryptApiKey(activeProject.geminiApiKey, activeProject.ownerUid || '')
+    : '';
 
   const handleFile = useCallback(async (file: File) => {
     setError('');

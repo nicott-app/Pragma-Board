@@ -187,12 +187,18 @@ export const DailyDrawer: React.FC = () => {
                 <button
                   className="btn btn-primary btn-sm"
                   onClick={handleGenerate}
-                  disabled={isGenerating || (done.length === 0 && totalActiveTickets === 0 && blocked.length === 0)}
+                  disabled={isGenerating || (done.length === 0 && totalActiveTickets === 0 && blocked.length === 0) || !activeProject.geminiApiKey}
                 >
                   {isGenerating ? 'Generando...' : 'Generar'}
                 </button>
               </div>
             </div>
+            {!activeProject.geminiApiKey && (
+              <div style={{ marginTop: '0.75rem', padding: '0.75rem', background: '#fef3c7', border: '1px solid #fcd34d', borderRadius: '6px', fontSize: '0.85rem', color: '#92400e' }}>
+                <strong>No hay API Key configurada.</strong><br/>
+                Para usar la inteligencia artificial de coste cero, el administrador del proyecto debe configurar su clave gratuita de Gemini (Bring Your Own Key) en los <strong>Ajustes del Proyecto &gt; Integraciones</strong>.
+              </div>
+            )}
             {summary && (
               <div className="daily-ai-summary">
                 {summary}

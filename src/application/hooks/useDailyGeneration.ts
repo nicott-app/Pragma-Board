@@ -5,14 +5,18 @@ import { useSettingsStore } from '../store/useSettingsStore';
 import { useToastStore } from '../store/useToastStore';
 import { Ticket } from '../../domain/models/Ticket';
 import { GeminiService } from '../../infrastructure/ai/GeminiService';
-import { getFunctions, httpsCallable } from 'firebase/functions';
+import { decryptApiKey } from '../../lib/cryptoUtils';
+import { toTimestampMs } from '../../lib/dateUtils';
+import { FirebaseProjectRepository } from '../../infrastructure/firebase/FirebaseProjectRepository';
+
+const projectRepo = new FirebaseProjectRepository();
 
 export const useDailyGeneration = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [summary, setSummary] = useState<string>('');
   
   const activeProject = useProjectStore(s => s.activeProject);
-  const geminiApiKey = useSettingsStore(s => s.geminiApiKey);
+  const setActiveProject = useProjectStore(s => s.setActiveProject);
   const geminiModel = useSettingsStore(s => s.geminiModel);
   const addToast = useToastStore(s => s.addToast);
 
@@ -93,21 +97,42 @@ export const useDailyGeneration = () => {
     blocked: Ticket[]
   ) => {
     if (!activeProject) return;
+
+    // --- COOLDOWN CHECK ---
+    const cooldownMs = 30 * 1000;
+    const lastCall = activeProject.lastAiCallAt ? toTimestampMs(activeProject.lastAiCallAt) : 0;
+    if (Date.now() - lastCall < cooldownMs) {
+      const waitSecs = Math.ceil((cooldownMs - (Date.now() - lastCall)) / 1000);
+      addToast('info', `Espera ${waitSecs}s antes de volver a generar.`, 'Protección anti-spam');
+      return;
+    }
+    
+    const effectiveApiKey = activeProject.geminiApiKey 
+      ? decryptApiKey(activeProject.geminiApiKey, activeProject.ownerUid || '')
+      : '';
+
+    if (!effectiveApiKey) {
+      addToast('error', 'Por favor, configura tu API Key de Gemini en los ajustes del proyecto para usar la IA.', 'Falta API Key');
+      return;
+    }
     
     setIsGenerating(true);
     setSummary('Generando resumen con IA...');
-    
-    const effectiveApiKey = import.meta.env.VITE_GEMINI_API_KEY || activeProject.geminiApiKey || geminiApiKey;
 
-    // Flatten all active tickets for legacy fallback
-    const inProgress = wipByColumn.flatMap(col => col.tickets);
-    
-    if (effectiveApiKey) {
-      try {
-        const dateStr = new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        
-        const doneText = done.length ? done.map(formatDoneTicket).join('\n') : 'Ninguno';
-        const blockedText = blocked.length ? blocked.map(formatBlockedTicket).join('\n') : 'Ninguno';
+    // Update cooldown
+    try {
+      const now = Date.now();
+      await projectRepo.updateProject(activeProject.id, { lastAiCallAt: now });
+      setActiveProject({ ...activeProject, lastAiCallAt: now });
+    } catch (e) {
+      LoggerService.warn('Could not update AI cooldown', e);
+    }
+
+    try {
+      const dateStr = new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      
+      const doneText = done.length ? done.map(formatDoneTicket).join('\n') : 'Ninguno';
+      const blockedText = blocked.length ? blocked.map(formatBlockedTicket).join('\n') : 'Ninguno';
 
         // Build WIP section per column so the AI knows the exact workflow stage
         const wipText = wipByColumn.length > 0
@@ -165,36 +190,6 @@ Escribe en formato markdown limpio y directo.`;
       } finally {
         setIsGenerating(false);
       }
-      return;
-    }
-
-    // Fallback to Cloud Function if no local API Key
-    try {
-      const { app } = await import('../../infrastructure/firebase/FirebaseConfig');
-      const functions = getFunctions(app);
-      const generateDailyStandup = httpsCallable(functions, 'generateDailyStandup');
-      
-      const allTickets = [
-        ...done.map(t => ({ id: t.id, title: t.title, status: 'Completado', assignees: t.assignees })),
-        ...inProgress.map(t => ({ id: t.id, title: t.title, status: 'En Progreso', assignees: t.assignees })),
-        ...blocked.map(t => ({ id: t.id, title: t.title, status: 'Impedido', assignees: t.assignees, blockerReason: t.blockerReason }))
-      ];
-
-      const payload = {
-        tickets: allTickets,
-        promptContext: "Resume el estado del Daily Standup basado en estos tickets."
-      };
-
-      const result = await generateDailyStandup(payload);
-      setSummary((result.data as any).summary || 'Sin resultados');
-      addToast('success', 'Resumen Daily generado vía Cloud Functions', 'IA Completada');
-    } catch (err: unknown) {
-      LoggerService.error("Cloud function error:", err);
-      setSummary(`Error del servidor: ${(err as Error).message || 'Error interno. Revisa que la función esté desplegada y tenga API key.'}`);
-      addToast('error', (err as Error).message || 'Fallo conectando con Cloud Functions', 'Error del Servidor');
-    } finally {
-      setIsGenerating(false);
-    }
   };
 
   return { summary, isGenerating, generateDaily };
