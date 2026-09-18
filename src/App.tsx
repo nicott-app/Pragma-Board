@@ -1,5 +1,5 @@
 import { LoggerService } from './infrastructure/services/LoggerService';
-import React, { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './presentation/components/layout/Layout';
 import { Board } from './presentation/components/board/Board';
