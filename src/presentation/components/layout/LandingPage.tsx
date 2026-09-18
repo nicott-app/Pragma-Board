@@ -41,7 +41,7 @@ export const LandingPage: React.FC = () => {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <img src="/sprinto-logo.svg" alt="Sprinto Logo" width="32" height="32" style={{ borderRadius: '6px' }} />
-          <span style={{ fontSize: '1.25rem', fontWeight: 700, tracking: '-0.5px' }}>Sprinto</span>
+          <span style={{ fontSize: '1.25rem', fontWeight: 700, letterSpacing: '-0.5px' }}>Sprinto</span>
         </div>
         
         <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
