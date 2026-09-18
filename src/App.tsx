@@ -1,5 +1,6 @@
 import { LoggerService } from './infrastructure/services/LoggerService';
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './presentation/components/layout/Layout';
 import { Board } from './presentation/components/board/Board';
 import { ListView } from './presentation/components/board/ListView';
@@ -206,23 +207,25 @@ function App() {
     };
   }, [activeProject?.id]);
 
-  if (!currentUser) {
-    return (
-      <>
-        <LandingPage />
-        {isLoginOpen && <LoginModal />}
-        <ToastContainer />
-        <CookieBanner />
-        <Suspense fallback={null}>
-          {isPrivacyOpen && <PrivacyPolicyModal />}
-        </Suspense>
-      </>
-    );
-  }
-
   return (
-    <Layout>
-      <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <Routes>
+      <Route path="/inicio" element={
+        currentUser ? <Navigate to="/" replace /> : (
+          <>
+            <LandingPage />
+            {isLoginOpen && <LoginModal />}
+            <ToastContainer />
+            <CookieBanner />
+            <Suspense fallback={null}>
+              {isPrivacyOpen && <PrivacyPolicyModal />}
+            </Suspense>
+          </>
+        )
+      } />
+      <Route path="/*" element={
+        !currentUser ? <Navigate to="/inicio" replace /> : (
+          <Layout>
+            <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
         {currentUser.isApproved === false ? (
           <PendingApprovalScreen />
         ) : !activeProject ? (
@@ -294,6 +297,9 @@ function App() {
         </Suspense>
       </div>
     </Layout>
+        )
+      } />
+    </Routes>
   );
 }
 

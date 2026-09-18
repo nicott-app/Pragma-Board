@@ -34,8 +34,12 @@ if (import.meta.env.MODE !== 'production') {
   (window as any).useProjectStore = useProjectStore;
 }
 
+import { BrowserRouter } from 'react-router-dom';
+
 createRoot(document.getElementById('root')!).render(
   <ErrorBoundary>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </ErrorBoundary>
 );
