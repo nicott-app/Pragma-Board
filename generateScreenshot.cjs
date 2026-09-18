@@ -280,9 +280,9 @@ fs.writeFileSync(path.join(__dirname, 'mock.html'), htmlContent);
   await new Promise(r => setTimeout(r, 1000));
 
   console.log("Taking screenshot...");
-  await page.screenshot({ path: path.join(__dirname, 'public', 'captura-app.png') });
+  await page.screenshot({ path: path.join(__dirname, 'public', 'captura-app-v2.png') });
   
   await browser.close();
   fs.unlinkSync(path.join(__dirname, 'mock.html'));
-  console.log("Screenshot generated at public/captura-app.png!");
+  console.log("Screenshot generated at public/captura-app-v2.png!");
 })();

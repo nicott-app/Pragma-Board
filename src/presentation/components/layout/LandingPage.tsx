@@ -156,7 +156,7 @@ export const LandingPage: React.FC = () => {
                   Añade tu imagen en /public/captura-app.png
                 */}
                 <img 
-                  src="/captura-app.png" 
+                  src="/captura-app-v2.png" 
                   alt="Captura real del tablero Sprinto" 
                   className="w-full h-full object-cover"
                   onError={(e) => {
