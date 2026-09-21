@@ -85,17 +85,17 @@ module.exports = {
         "space-lg": "1.5rem"
       },
       fontFamily: {
-        "body-lg": ["Inter"],
-        "headline-sm": ["Geist"],
-        "headline-md": ["Geist"],
-        "display-mobile": ["Geist"],
-        "label-meta": ["Inter"],
-        "headline-lg": ["Geist"],
-        "headline-lg-mobile": ["Geist"],
-        "body-md": ["Inter"],
-        "body-sm": ["Inter"],
-        "label-code": ["JetBrains Mono"],
-        display: ["Geist"]
+        "body-lg": ["Inter", "sans-serif"],
+        "headline-sm": ["Inter", "sans-serif"],
+        "headline-md": ["Inter", "sans-serif"],
+        "display-mobile": ["Inter", "sans-serif"],
+        "label-meta": ["Inter", "sans-serif"],
+        "headline-lg": ["Inter", "sans-serif"],
+        "headline-lg-mobile": ["Inter", "sans-serif"],
+        "body-md": ["Inter", "sans-serif"],
+        "body-sm": ["Inter", "sans-serif"],
+        "label-code": ["JetBrains Mono", "monospace"],
+        display: ["Inter", "sans-serif"]
       },
       fontSize: {
         "body-lg": ["18px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "400" }],

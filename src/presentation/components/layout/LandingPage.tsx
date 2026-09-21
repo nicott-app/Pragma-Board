@@ -3,7 +3,7 @@ import './LandingPage.css';
 
 
 // Sections
-import { LandingNavbar, LandingHero, LandingSocialProof, LandingProblem } from './landing/LandingSections1';
+import { LandingNavbar, LandingHero, LandingProblem } from './landing/LandingSections1';
 import { LandingValueProp, LandingProductShowcase } from './landing/LandingSections2';
 import { LandingIASection, LandingWorkflow, LandingComparison, LandingCTA, LandingFooter } from './landing/LandingSections3';
 
@@ -25,7 +25,6 @@ export const LandingPage: React.FC = () => {
       <main className="w-full pt-16 bg-surface-canvas">
         <div className="flex flex-col w-full text-text-primary selection:bg-primary-container selection:text-on-primary-container">
           <LandingHero />
-          <LandingSocialProof />
           <LandingProblem />
           <LandingValueProp />
           <LandingProductShowcase />

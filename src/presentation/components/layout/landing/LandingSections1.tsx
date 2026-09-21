@@ -102,43 +102,7 @@ export const LandingHero: React.FC = () => {
   );
 };
 
-// 3. SOCIAL PROOF
-export const LandingSocialProof: React.FC = () => {
-  return (
-    <section className="w-full py-space-xl bg-surface-card">
-      <div className="max-w-[1200px] mx-auto px-margin-mobile md:px-margin text-center">
-        <p className="font-label-meta text-label-meta uppercase tracking-wider text-text-muted mb-space-lg">
-          Equipos de ingeniería y producto gestionan sus sprints diarios en Sprinto
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-space-lg items-center justify-center opacity-70">
-          <div className="flex items-center justify-center gap-1.5 font-headline-sm text-text-primary tracking-tight font-bold">
-            <svg className="w-4 h-4 text-text-primary" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13H5.5L12 6.5z"></path></svg>
-            <span className="text-[17px]">VERTEX</span>
-          </div>
-          <div className="flex items-center justify-center gap-1.5 font-headline-sm text-text-primary tracking-tight font-semibold">
-            <div className="w-3 h-4 bg-text-primary rounded-sm"></div>
-            <span className="text-[17px] tracking-wider uppercase">Monolith</span>
-          </div>
-          <div className="flex items-center justify-center gap-1.5 font-label-code text-text-primary font-semibold">
-            <span className="w-2 h-2 rounded-full bg-accent-mint-deep"></span>
-            <span className="text-[16px]">pulse::os</span>
-          </div>
-          <div className="flex items-center justify-center gap-1.5 font-headline-sm text-text-primary tracking-tight font-medium">
-            <svg className="w-4 h-4 text-text-primary" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
-            <span className="text-[17px]">Layerflow</span>
-          </div>
-          <div className="flex items-center justify-center gap-1.5 font-headline-sm text-text-primary font-bold">
-            <span className="text-[18px] tracking-tighter">HYPERION</span>
-          </div>
-          <div className="flex items-center justify-center gap-1.5 font-label-code text-text-primary font-medium">
-            <svg className="w-4 h-4 text-text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-            <span className="text-[15px]">kubestack</span>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
+
 
 // 4. THE PROBLEM
 export const LandingProblem: React.FC = () => {
