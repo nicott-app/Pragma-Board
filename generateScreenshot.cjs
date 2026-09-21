@@ -87,10 +87,10 @@ const htmlContent = `
       <!-- Ticket Backlog 1 -->
       <div class="bg-white rounded-xl card-shadow p-3 border border-gray-200 border-l-4 border-l-gray-400">
         <div class="flex justify-between items-start mb-1">
-          <span class="text-[11px] text-gray-400 font-medium">DA-051</span>
+          <span class="text-[11px] text-gray-400 font-medium">TASK-001</span>
           <span class="material-symbols-outlined text-[16px] text-gray-300">delete</span>
         </div>
-        <h4 class="text-sm font-semibold text-gray-800 mb-2">Definir arquitectura de datos para V2</h4>
+        <h4 class="text-sm font-semibold text-gray-800 mb-2">Diseñar nueva landing page</h4>
         <div class="flex items-center gap-2 mb-2 flex-wrap">
           <span class="text-[10px] font-bold text-gray-600 bg-gray-100 px-2 py-0.5 rounded flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">edit</span> TAREA</span>
           <span class="text-[10px] font-bold text-gray-600 bg-gray-100 px-2 py-0.5 rounded flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-gray-400"></div> 4 H</span>
@@ -116,9 +116,9 @@ const htmlContent = `
       <!-- Ticket Progreso 1 -->
       <div class="bg-white rounded-xl card-shadow p-3 border border-gray-200 border-l-4 border-l-blue-500">
         <div class="flex justify-between items-start mb-1">
-          <span class="text-[11px] text-gray-400 font-medium">DA-049</span>
+          <span class="text-[11px] text-gray-400 font-medium">TASK-002</span>
         </div>
-        <h4 class="text-sm font-semibold text-gray-800 mb-2">Modificar informe S082_IAT_JOURNEYS_CDP</h4>
+        <h4 class="text-sm font-semibold text-gray-800 mb-2">Implementar sistema de login con Google</h4>
         <div class="flex items-center gap-2 mb-2 flex-wrap">
           <span class="text-[10px] font-bold text-teal-700 bg-teal-50 border border-teal-100 px-2 py-0.5 rounded flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">trending_up</span> MEJORA</span>
           <span class="text-[10px] font-bold text-gray-600 bg-gray-100 px-2 py-0.5 rounded flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-orange-400"></div> 8 H</span>
@@ -128,8 +128,8 @@ const htmlContent = `
           <span class="text-[10px] font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">warning</span> SIN AVANCE</span>
         </div>
         <div class="flex items-center gap-1 flex-wrap mb-2">
-          <span class="text-[9px] text-gray-500 border border-gray-200 rounded px-1.5 py-0.5">BI</span>
-          <span class="text-[9px] text-gray-500 border border-gray-200 rounded px-1.5 py-0.5">Reporting</span>
+          <span class="text-[9px] text-gray-500 border border-gray-200 rounded px-1.5 py-0.5">Frontend</span>
+          <span class="text-[9px] text-gray-500 border border-gray-200 rounded px-1.5 py-0.5">Auth</span>
         </div>
         <div class="flex items-center justify-between mt-2 pt-2 border-t border-gray-100">
           <div class="flex gap-2 text-[11px] text-gray-400 font-medium items-center">
@@ -142,9 +142,9 @@ const htmlContent = `
       <!-- Ticket Progreso 2 -->
       <div class="bg-white rounded-xl card-shadow p-3 border border-gray-200 border-l-4 border-l-blue-500">
         <div class="flex justify-between items-start mb-1">
-          <span class="text-[11px] text-gray-400 font-medium">DA-052</span>
+          <span class="text-[11px] text-gray-400 font-medium">TASK-003</span>
         </div>
-        <h4 class="text-sm font-semibold text-gray-800 mb-2">Implementar autenticación SSO</h4>
+        <h4 class="text-sm font-semibold text-gray-800 mb-2">Error en el carrito de compras</h4>
         <div class="flex items-center gap-2 mb-2 flex-wrap">
           <span class="text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">code</span> DESARROLLO</span>
           <span class="text-[10px] font-bold text-gray-600 bg-gray-100 px-2 py-0.5 rounded flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-orange-400"></div> 12 H</span>
@@ -173,9 +173,9 @@ const htmlContent = `
       <!-- Ticket Bloqueado -->
       <div class="bg-white rounded-xl card-shadow p-3 border border-red-200 border-l-4 border-l-red-500 bg-red-50/30">
         <div class="flex justify-between items-start mb-1">
-          <span class="text-[11px] text-gray-400 font-medium">DA-050</span>
+          <span class="text-[11px] text-gray-400 font-medium">TASK-004</span>
         </div>
-        <h4 class="text-sm font-semibold text-gray-800 mb-2">Despliegue a Producción Sprint 34</h4>
+        <h4 class="text-sm font-semibold text-gray-800 mb-2">Migración de base de datos a PostgreSQL</h4>
         <div class="flex items-center gap-2 mb-2 flex-wrap">
           <span class="text-[10px] font-bold text-red-700 bg-red-100 border border-red-200 px-2 py-0.5 rounded flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">bug_report</span> BUG</span>
           <span class="text-[10px] font-bold text-gray-600 bg-gray-100 px-2 py-0.5 rounded flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div> 2 H</span>
@@ -202,9 +202,9 @@ const htmlContent = `
       <!-- Ticket Revisión -->
       <div class="bg-white rounded-xl card-shadow p-3 border border-amber-200 border-l-4 border-l-amber-400">
         <div class="flex justify-between items-start mb-1">
-          <span class="text-[11px] text-gray-400 font-medium">DA-048</span>
+          <span class="text-[11px] text-gray-400 font-medium">TASK-005</span>
         </div>
-        <h4 class="text-sm font-semibold text-gray-800 mb-2">Modificar modelo semántico S082_JOURNEYS</h4>
+        <h4 class="text-sm font-semibold text-gray-800 mb-2">Optimización de tiempos de carga</h4>
         <div class="flex items-center gap-2 mb-2 flex-wrap">
           <span class="text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">code</span> DESARROLLO</span>
           <span class="text-[10px] font-bold text-gray-600 bg-gray-100 px-2 py-0.5 rounded flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-orange-400"></div> 8 H</span>
@@ -231,9 +231,9 @@ const htmlContent = `
       <!-- Ticket Hecho 1 -->
       <div class="bg-white rounded-xl card-shadow p-3 border border-gray-200 border-l-4 border-l-emerald-500 opacity-70">
         <div class="flex justify-between items-start mb-1">
-          <span class="text-[11px] text-gray-400 font-medium line-through">DA-044</span>
+          <span class="text-[11px] text-gray-400 font-medium line-through">TASK-006</span>
         </div>
-        <h4 class="text-sm font-semibold text-gray-500 line-through mb-2">Revisar errores del modelo S103 en Snowflake</h4>
+        <h4 class="text-sm font-semibold text-gray-500 line-through mb-2">Actualizar dependencias de React</h4>
         <div class="flex items-center gap-2 mb-2 flex-wrap">
           <span class="text-[10px] font-bold text-red-700 bg-red-50 border border-red-100 px-2 py-0.5 rounded flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">bug_report</span> BUG</span>
         </div>
@@ -248,9 +248,9 @@ const htmlContent = `
       <!-- Ticket Hecho 2 -->
       <div class="bg-white rounded-xl card-shadow p-3 border border-gray-200 border-l-4 border-l-emerald-500 opacity-70">
         <div class="flex justify-between items-start mb-1">
-          <span class="text-[11px] text-gray-400 font-medium line-through">DA-016</span>
+          <span class="text-[11px] text-gray-400 font-medium line-through">TASK-007</span>
         </div>
-        <h4 class="text-sm font-semibold text-gray-500 line-through mb-2">Informe de S82 Journeys CDP</h4>
+        <h4 class="text-sm font-semibold text-gray-500 line-through mb-2">Redactar documentación de la API</h4>
         <div class="flex items-center gap-2 mb-2 flex-wrap">
           <span class="text-[10px] font-bold text-purple-700 bg-purple-50 border border-purple-100 px-2 py-0.5 rounded flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">inventory_2</span> ENTREGABLE</span>
         </div>
