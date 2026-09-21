@@ -199,7 +199,7 @@ export const LandingCTA: React.FC = () => {
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-space-md">
           <button 
-            className="inline-flex items-center justify-center px-8 py-4 text-button font-button text-surface bg-text-primary hover:bg-text-secondary rounded-lg transition-all active:scale-[0.98] shadow-md"
+            className="btn-glass px-8 py-4 text-[17px] font-button rounded-lg transition-all active:scale-[0.98] shadow-md"
             onClick={() => setLoginOpen(true)}
           >
             Crear cuenta gratis ahora

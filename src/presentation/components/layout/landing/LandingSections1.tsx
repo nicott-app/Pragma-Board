@@ -3,84 +3,67 @@ import { useUIStore } from '../../../../application/store/useUIStore';
 
 // 1. NAVBAR
 export const LandingNavbar: React.FC = () => {
-  const setLoginOpen = useUIStore((s) => s.setLoginOpen);
-
+  const setLoginOpen = useUIStore((state) => state.setLoginOpen);
+  
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-surface-canvas/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
-      <div className="h-16 max-w-[1200px] mx-auto px-margin-mobile md:px-margin flex items-center justify-between">
-        <div className="flex items-center gap-space-lg">
-          <a className="flex items-center gap-space-sm" href="#">
-            <img alt="Sprinto Brand Logo" className="h-8 w-auto object-contain" src="/sprinto-logo.svg" />
-            <span className="font-headline-sm text-headline-sm text-text-primary tracking-tight">Sprinto</span>
-          </a>
-          <nav className="hidden md:flex items-center gap-space-sm">
-            <a className="px-space-sm py-space-xs font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Producto</a>
-            <a className="px-space-sm py-space-xs font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Funcionalidades</a>
-            <a className="px-space-sm py-space-xs font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">IA</a>
-            <a className="px-space-sm py-space-xs font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Recursos</a>
-          </nav>
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-surface-canvas/80 backdrop-blur-md border-b border-border-muted transition-colors duration-200">
+      <div className="max-w-[1200px] mx-auto px-margin-mobile md:px-margin h-16 flex items-center justify-between">
+        <div className="flex items-center gap-space-xs text-text-primary">
+          <img src="/sprinto-logo.svg" alt="Sprinto Logo" width={32} height={32} className="rounded-md" />
+          <span className="font-headline-sm font-bold tracking-tight">Sprinto</span>
         </div>
-        <div className="flex items-center gap-space-md">
-          <button onClick={() => setLoginOpen(true)} className="hidden sm:inline-block font-body-sm text-body-sm text-text-secondary hover:text-text-primary transition-colors cursor-pointer">
-            Iniciar sesión
-          </button>
-          <button onClick={() => setLoginOpen(true)} className="h-9 px-space-md flex items-center justify-center font-body-sm text-body-sm text-on-primary bg-text-primary hover:bg-inverse-surface rounded-xl transition-all cursor-pointer">
-            Empezar gratis
-          </button>
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0">
-            <span className="material-symbols-outlined text-on-primary text-[18px]">person</span>
-          </div>
+        <div className="hidden md:flex items-center gap-space-md font-body-sm font-medium">
+          <button className="text-text-secondary hover:text-text-primary transition-colors px-2 py-1" onClick={() => setLoginOpen(true)}>Iniciar Sesión</button>
+          <button className="btn-glass px-4 py-2 text-button font-button rounded-full" onClick={() => setLoginOpen(true)}>Empezar gratis</button>
         </div>
       </div>
-    </header>
+    </nav>
   );
 };
 
 // 2. HERO
 export const LandingHero: React.FC = () => {
-  const setLoginOpen = useUIStore((s) => s.setLoginOpen);
+  const setLoginOpen = useUIStore((state) => state.setLoginOpen);
 
   return (
-    <section className="w-full pt-12 pb-20 px-margin-mobile md:px-margin max-w-[1200px] mx-auto flex flex-col items-center text-center">
-      {/* Refined Badge */}
-      <div className="inline-flex items-center gap-space-sm px-space-md py-1 rounded-full bg-surface-card shadow-sm mb-space-lg hover:shadow transition-all cursor-default">
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-container opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-mint-deep"></span>
-        </span>
-        <span className="font-label-code text-label-code text-text-secondary tracking-tight">
-          Sprinto 2.0 <span className="text-text-muted">/</span> Diseñado para equipos de alta cadencia
-        </span>
+    <section className="w-full flex flex-col items-center text-center pt-24 pb-20 px-margin-mobile md:px-margin max-w-[1200px] mx-auto">
+      {/* Badge */}
+      <div className="mb-space-lg flex items-center gap-2 bg-surface-card border border-border-strong px-3 py-1.5 rounded-full font-label-code text-label-code text-text-secondary shadow-sm">
+        <span className="w-2 h-2 rounded-full bg-accent-mint-deep animate-pulse"></span>
+        Sprinto 2.0 ya disponible
       </div>
       
-      {/* Main Headline */}
-      <h1 className="font-display text-headline-lg-mobile md:text-display font-semibold tracking-tight text-text-primary max-w-4xl mb-space-md">
-        Del trabajo pendiente al trabajo hecho.
+      {/* Headline */}
+      <h1 className="font-headline-lg text-4xl md:text-6xl lg:text-[72px] font-bold tracking-tight text-text-primary mb-space-md max-w-4xl leading-[1.05]">
+        La gestión ágil que <span className="text-text-muted">tu equipo merece.</span>
       </h1>
       
       {/* Subheadline */}
-      <p className="font-body-lg text-body-md md:text-body-lg text-text-secondary max-w-2xl mb-space-xl">
-        Organiza proyectos, epics, tickets y el ritmo de tu equipo desde un único espacio de alta velocidad. Con inteligencia integrada donde aporta valor real, sin fricción.
+      <p className="font-body-lg text-[18px] md:text-[22px] text-text-secondary mb-space-xl max-w-2xl leading-relaxed">
+        Tableros ultra rápidos, integración nativa con Gemini y cero lock-in. Todo lo que necesitas para ejecutar sprints, sin la complejidad que odias.
       </p>
       
-      {/* CTAs */}
-      <div className="flex flex-col sm:flex-row items-center gap-space-md mb-space-md w-full sm:w-auto">
-        <button onClick={() => setLoginOpen(true)} className="w-full sm:w-auto h-10 px-space-lg bg-text-primary hover:bg-inverse-surface text-on-primary font-body-sm font-medium rounded-lg flex items-center justify-center gap-space-xs shadow-sm hover:translate-y-[-1px] transition-all cursor-pointer">
-          <span>Empezar gratis</span>
-          <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+      {/* CTA Buttons */}
+      <div className="flex flex-col sm:flex-row items-center gap-space-sm mb-space-lg w-full sm:w-auto">
+        <button 
+          className="btn-glass px-8 py-4 text-[17px] font-button rounded-full w-full sm:w-auto"
+          onClick={() => setLoginOpen(true)}>
+          Empezar gratis
         </button>
-        <button className="w-full sm:w-auto h-10 px-space-lg bg-surface-card hover:bg-surface text-text-primary font-body-sm font-medium rounded-lg shadow-sm hover:translate-y-[-1px] transition-all flex items-center justify-center gap-space-xs cursor-pointer" onClick={() => {
+        <button 
+          className="btn-glass-secondary px-8 py-4 text-[17px] font-button rounded-full w-full sm:w-auto flex items-center justify-center gap-2"
+          onClick={() => {
             const el = document.getElementById('demo-section');
             if(el) el.scrollIntoView({behavior: 'smooth'});
         }}>
-          <span className="material-symbols-outlined text-[18px] text-text-muted">play_circle</span>
+          <span className="material-symbols-outlined text-[20px]">play_circle</span>
           <span>Ver cómo funciona</span>
         </button>
       </div>
       
       {/* Meta note */}
       <p className="font-label-meta text-label-meta text-text-muted mb-16 tracking-normal">
-        Prueba de 14 días sin tarjeta <span className="mx-1">·</span> Configuración en 2 minutos <span className="mx-1">·</span> Migración en 1 clic desde Jira y Linear
+        Modelo BYOK sin cuotas ocultas <span className="mx-1">·</span> Configuración en 2 minutos <span className="mx-1">·</span> Exportación a JSON en 1 clic
       </p>
       
       {/* HERO VISUAL SHOWCASE */}
@@ -101,8 +84,6 @@ export const LandingHero: React.FC = () => {
     </section>
   );
 };
-
-
 
 // 4. THE PROBLEM
 export const LandingProblem: React.FC = () => {
