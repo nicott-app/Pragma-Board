@@ -109,12 +109,12 @@ export const LandingProblem: React.FC = () => {
   return (
     <section className="w-full py-28 px-margin-mobile md:px-margin max-w-[1200px] mx-auto">
       <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-space-xl">
-        <span className="font-label-meta text-label-meta uppercase tracking-wider text-text-muted mb-space-xs">Fricción operacional</span>
+        <span className="font-label-meta text-label-meta uppercase tracking-wider text-text-muted mb-space-xs">Fricción operacional vs Sprinto</span>
         <h2 className="font-headline-lg text-headline-md md:text-headline-lg text-text-primary font-semibold tracking-tight mb-space-sm">
-          ¿Por qué gestionar el trabajo se siente como otro trabajo?
+          ¿Por qué pagar por usuario y funcionalidades de IA bloqueadas?
         </h2>
         <p className="font-body-lg text-body-md md:text-body-lg text-text-secondary">
-          Demasiadas herramientas. Demasiado seguimiento. Demasiado tiempo gestionando el trabajo en lugar de hacerlo.
+          Las herramientas actuales cobran por cada miembro de tu equipo y reservan sus asistentes inteligentes para los planes más costosos.
         </p>
       </div>
 
@@ -124,33 +124,33 @@ export const LandingProblem: React.FC = () => {
           <div>
             <div className="flex items-center gap-space-xs mb-space-md text-error">
               <span className="material-symbols-outlined text-[20px]">cancel</span>
-              <span className="font-label-code text-label-code uppercase tracking-wider font-semibold">El caos habitual</span>
+              <span className="font-label-code text-label-code uppercase tracking-wider font-semibold">Herramientas corporativas</span>
             </div>
             <h3 className="font-headline-sm text-headline-sm font-medium text-text-primary mb-space-md">
-              Sistemas fragmentados y burocracia paralizante
+              Suscripciones costosas y características restringidas
             </h3>
             <ul className="space-y-space-md text-body-md text-text-secondary">
               <li className="flex items-start gap-space-sm">
-                <span className="material-symbols-outlined text-[18px] text-text-muted shrink-0 mt-0.5">tab_unselected</span>
-                <span><strong>5 aplicaciones desconectadas:</strong> Documentos en Notion, tickets lentos en Jira, chat desordenado en Slack y código en GitHub.</span>
+                <span className="material-symbols-outlined text-[18px] text-text-muted shrink-0 mt-0.5">payments</span>
+                <span><strong>Planes por usuario:</strong> Modelos de negocio donde cada nuevo miembro del equipo engorda la factura a final de mes.</span>
               </li>
               <li className="flex items-start gap-space-sm">
-                <span className="material-symbols-outlined text-[18px] text-text-muted shrink-0 mt-0.5">edit_attributes</span>
-                <span><strong>40 campos obligatorios:</strong> Formularios eternos para registrar un bug menor de frontend de 5 minutos.</span>
+                <span className="material-symbols-outlined text-[18px] text-text-muted shrink-0 mt-0.5">lock</span>
+                <span><strong>IA como un lujo:</strong> Las funcionalidades de inteligencia artificial siempre están bloqueadas en los tiers "Enterprise".</span>
               </li>
               <li className="flex items-start gap-space-sm">
-                <span className="material-symbols-outlined text-[18px] text-text-muted shrink-0 mt-0.5">sync_problem</span>
-                <span><strong>Sincronizaciones rotas:</strong> Los tickets nunca reflejan el código real desplegado en producción.</span>
+                <span className="material-symbols-outlined text-[18px] text-text-muted shrink-0 mt-0.5">speed</span>
+                <span><strong>Curva de aprendizaje:</strong> Interfaces saturadas de opciones complejas y menús anidados que tu equipo casi nunca necesita usar.</span>
               </li>
               <li className="flex items-start gap-space-sm">
-                <span className="material-symbols-outlined text-[18px] text-text-muted shrink-0 mt-0.5">groups</span>
-                <span><strong>Reuniones de estatus infinitas:</strong> 45 minutos diarios de "qué hiciste ayer" que pudieron ser un log automático.</span>
+                <span className="material-symbols-outlined text-[18px] text-text-muted shrink-0 mt-0.5">vpn_key_off</span>
+                <span><strong>Datos secuestrados:</strong> Obstáculos constantes para exportar libremente tu información cuando decides migrar.</span>
               </li>
             </ul>
           </div>
           <div className="mt-space-lg p-space-md bg-surface-canvas rounded-lg">
-            <div className="font-label-code text-[11px] text-text-muted uppercase mb-1">Impacto medible</div>
-            <p className="font-headline-sm text-headline-sm font-semibold text-text-primary">-32% de tiempo de ingeniería efectiva al mes</p>
+            <div className="font-label-code text-[11px] text-text-muted uppercase mb-1">El resultado habitual</div>
+            <p className="font-headline-sm text-headline-sm font-semibold text-text-primary">Costes recurrentes altos y adopción lenta</p>
           </div>
         </div>
 
@@ -160,33 +160,33 @@ export const LandingProblem: React.FC = () => {
           <div>
             <div className="flex items-center gap-space-xs mb-space-md text-accent-mint-deep">
               <span className="material-symbols-outlined text-[20px]">check_circle</span>
-              <span className="font-label-code text-label-code uppercase tracking-wider font-semibold">Con Sprinto</span>
+              <span className="font-label-code text-label-code uppercase tracking-wider font-semibold">El modelo Sprinto</span>
             </div>
             <h3 className="font-headline-sm text-headline-sm font-semibold text-text-primary mb-space-md">
-              Un plano de control unificado, ágil y reactivo
+              Gestión ágil, en tiempo real y 100% libre de cuotas
             </h3>
             <ul className="space-y-space-md text-body-md text-text-primary">
               <li className="flex items-start gap-space-sm">
-                <span className="material-symbols-outlined text-[18px] text-accent-mint-deep shrink-0 mt-0.5">layers</span>
-                <span><strong>Un único sistema unificado:</strong> Epics, historias, bugs e integraciones bajo un mismo canvas de baja latencia.</span>
+                <span className="material-symbols-outlined text-[18px] text-accent-mint-deep shrink-0 mt-0.5">key</span>
+                <span><strong>Modelo BYOK (Bring Your Own Key):</strong> Trae tu propia clave de Google Gemini. Paga céntimos directamente al proveedor sin recargos.</span>
               </li>
               <li className="flex items-start gap-space-sm">
                 <span className="material-symbols-outlined text-[18px] text-accent-mint-deep shrink-0 mt-0.5">bolt</span>
-                <span><strong>Respuesta en menos de 50ms:</strong> Creación y edición con atajos de teclado instantáneos. Cero spinners de carga.</span>
+                <span><strong>Colaboración en vivo:</strong> Arquitectura basada en Firebase Firestore que sincroniza cada cambio de estado o texto en tiempo real para todos.</span>
               </li>
               <li className="flex items-start gap-space-sm">
-                <span className="material-symbols-outlined text-[18px] text-accent-mint-deep shrink-0 mt-0.5">cable</span>
-                <span><strong>Flujo directo con Git:</strong> El estado del ticket progresa automáticamente al abrir, revisar y mergear un Pull Request.</span>
+                <span className="material-symbols-outlined text-[18px] text-accent-mint-deep shrink-0 mt-0.5">code</span>
+                <span><strong>Centrado en el desarrollador:</strong> Soporte Markdown avanzado y un diseño Kanban fluido que se siente ligero y extremadamente responsivo.</span>
               </li>
               <li className="flex items-start gap-space-sm">
-                <span className="material-symbols-outlined text-[18px] text-accent-mint-deep shrink-0 mt-0.5">auto_awesome</span>
-                <span><strong>Actualizaciones asíncronas automáticas:</strong> La IA contextual sintetiza el progreso diario sin interrumpir a los desarrolladores.</span>
+                <span className="material-symbols-outlined text-[18px] text-accent-mint-deep shrink-0 mt-0.5">download</span>
+                <span><strong>Tus datos son tuyos:</strong> Modulo de importación y exportación de un clic. Descarga una copia de seguridad en JSON siempre que lo desees.</span>
               </li>
             </ul>
           </div>
           <div className="mt-space-lg p-space-md bg-surface-canvas rounded-lg">
-            <div className="font-label-code text-[11px] text-accent-mint-deep uppercase mb-1 font-semibold">Cadencia acelerada</div>
-            <p className="font-headline-sm text-headline-sm font-semibold text-text-primary">+4.2x velocidad de resolución de incidencias</p>
+            <div className="font-label-code text-[11px] text-accent-mint-deep uppercase mb-1 font-semibold">Ventaja directa</div>
+            <p className="font-headline-sm text-headline-sm font-semibold text-text-primary">Adopción inmediata y $0 de coste por asiento</p>
           </div>
         </div>
       </div>

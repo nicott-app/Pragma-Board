@@ -1,107 +1,85 @@
 import React from 'react';
+import { useUIStore } from '../../../../application/store/useUIStore';
 
-// 7. IA SECTION
+// 7. IA BYOK SECTION
 export const LandingIASection: React.FC = () => {
   return (
-    <section className="w-full py-28 bg-surface-card">
-      <div className="max-w-[1200px] mx-auto px-margin-mobile md:px-margin">
-        <div className="max-w-3xl mb-space-xl">
-          <div className="inline-flex items-center gap-space-xs px-2.5 py-1 rounded bg-surface-canvas text-accent-mint-deep font-label-code text-label-code font-semibold mb-space-xs">
-            <span className="material-symbols-outlined text-[15px]">auto_awesome</span>
-            Inteligencia nativa en el flujo de trabajo
-          </div>
-          <h2 className="font-headline-lg text-headline-md md:text-headline-lg font-semibold tracking-tight text-text-primary mb-space-sm">
-            La IA no gestiona tu producto por ti. Te ayuda a gestionarlo mejor.
-          </h2>
-          <p className="font-body-lg text-body-md md:text-body-lg text-text-secondary">
-            Sin prompts complicados ni interfaces de chat invasivas. Capacidades deterministas integradas directamente en el flujo de trabajo donde ahorran fricción repetitiva.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
-          {/* Action 1 */}
-          <div className="bg-surface-canvas p-space-lg rounded-xl flex flex-col justify-between shadow-sm">
-            <div>
-              <div className="flex items-center justify-between mb-space-sm">
-                <span className="font-label-meta text-label-meta uppercase text-text-muted">Acción 01</span>
-                <span className="font-label-code text-[11px] bg-surface-card px-2 py-0.5 rounded text-text-secondary">1 clic · {"<1.2s"}</span>
-              </div>
-              <h3 className="font-headline-sm text-headline-sm font-semibold text-text-primary mb-space-xs">
-                Descomponer especificaciones en tareas
-              </h3>
-              <p className="font-body-md text-body-md text-text-secondary mb-space-md">
-                Un requerimiento de 1 párrafo se transforma automáticamente en 4 subtareas técnicas con criterios de aceptación validados.
-              </p>
-              <div className="bg-surface-card p-space-sm rounded-lg font-label-code text-[11px] space-y-1 text-text-secondary">
-                <div className="text-text-primary font-semibold">// Salida generada:</div>
-                <div className="text-text-primary">✔ Migración esquema Postgres (campo deleted_at)</div>
-                <div className="text-text-primary">✔ Endpoint DELETE /v1/organization/{"{id}"} con soft-delete</div>
-                <div className="text-text-primary">✔ Modal de confirmación con doble autenticación</div>
-                <div className="text-text-primary">✔ Test de integración Jest para retención 30 días</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Action 2 */}
-          <div className="bg-surface-canvas p-space-lg rounded-xl flex flex-col justify-between shadow-sm">
-            <div>
-              <div className="flex items-center justify-between mb-space-sm">
-                <span className="font-label-meta text-label-meta uppercase text-text-muted">Acción 02</span>
-                <span className="font-label-code text-[11px] bg-surface-card px-2 py-0.5 rounded text-text-secondary">Stakeholder ready</span>
-              </div>
-              <h3 className="font-headline-sm text-headline-sm font-semibold text-text-primary mb-space-xs">
-                Resumen ejecutivo de sprint para stakeholders
-              </h3>
-              <p className="font-body-md text-body-md text-text-secondary mb-space-md">
-                Genera en 5 segundos el reporte de avance de alto nivel para negocio, eliminando reuniones de estatus redundantes.
-              </p>
-              <div className="bg-surface-card p-space-sm rounded-lg font-body-sm text-[12px] text-text-secondary leading-relaxed">
-                <span className="font-label-code text-[11px] text-accent-mint-deep font-semibold block mb-1">Síntesis para VP of Product:</span>
-                "Completamos el 91% del alcance planeado en Sprint 14. La migración de autenticación SSO está en staging sin incidentes. El feature de exportación CSV se postergó por dependencia en la API de pagos."
-              </div>
-            </div>
-          </div>
-
-          {/* Action 3 */}
-          <div className="bg-surface-canvas p-space-lg rounded-xl flex flex-col justify-between shadow-sm">
-            <div>
-              <div className="flex items-center justify-between mb-space-sm">
-                <span className="font-label-meta text-label-meta uppercase text-text-muted">Acción 03</span>
-                <span className="font-label-code text-[11px] bg-error-container/30 text-error px-2 py-0.5 rounded font-semibold">Alerta Proactiva</span>
-              </div>
-              <h3 className="font-headline-sm text-headline-sm font-semibold text-text-primary mb-space-xs">
-                Detección de bloqueos y ruta crítica
-              </h3>
-              <p className="font-body-md text-body-md text-text-secondary mb-space-md">
-                Alerta temprana cuando un Pull Request o tarea dependiente supera las 48 horas sin movimiento en el camino crítico.
-              </p>
-              <div className="bg-surface-card p-space-sm rounded-lg font-label-code text-[11px] text-text-secondary space-y-1">
-                <div className="flex items-center gap-1.5 text-error font-semibold">
-                  <span className="material-symbols-outlined text-[14px]">warning</span> SPR-109 bloquea 3 entregables clave
+    <section className="w-full py-space-xl px-margin-mobile md:px-margin max-w-[1200px] mx-auto" id="ia-byok">
+      <div className="bg-[#0B0F19] rounded-2xl p-space-lg md:p-space-2xl text-white relative overflow-hidden shadow-xl border border-slate-800">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary-container/10 to-transparent pointer-events-none"></div>
+        <div className="relative z-10 flex flex-col md:flex-row gap-space-xl items-center">
+          <div className="w-full md:w-1/2">
+            <span className="font-label-code text-label-code text-accent-mint-deep border border-accent-mint-deep/30 bg-accent-mint-deep/10 px-3 py-1 rounded-full mb-space-sm inline-block">
+              Inteligencia Nativa
+            </span>
+            <h2 className="font-headline-lg text-headline-md md:text-headline-lg font-bold tracking-tight mb-space-md">
+              Tu IA. Tus reglas. Tus claves.
+            </h2>
+            <p className="font-body-lg text-body-md md:text-body-lg text-slate-300 mb-space-lg">
+              Sprinto utiliza un modelo BYOK (Bring Your Own Key) garantizando total privacidad. Paga céntimos directamente al proveedor de IA en lugar de infladas cuotas por usuario.
+            </p>
+            <div className="space-y-space-md">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded bg-slate-800 flex items-center justify-center shrink-0 border border-slate-700">
+                  <span className="material-symbols-outlined text-[16px] text-white">magic_button</span>
                 </div>
-                <p>Recomendación: Reasignar code review a @david_dev para desbloquear release.</p>
+                <div>
+                  <h4 className="font-headline-sm text-headline-sm font-semibold mb-1">Descomposición automática</h4>
+                  <p className="font-body-sm text-body-sm text-slate-400">Genera subtareas y requerimientos técnicos a partir de descripciones de producto en texto plano.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded bg-slate-800 flex items-center justify-center shrink-0 border border-slate-700">
+                  <span className="material-symbols-outlined text-[16px] text-white">summarize</span>
+                </div>
+                <div>
+                  <h4 className="font-headline-sm text-headline-sm font-semibold mb-1">Resumen ejecutivo</h4>
+                  <p className="font-body-sm text-body-sm text-slate-400">Condensa el estado del sprint en un reporte conciso para stakeholders no técnicos.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded bg-slate-800 flex items-center justify-center shrink-0 border border-slate-700">
+                  <span className="material-symbols-outlined text-[16px] text-white">monitoring</span>
+                </div>
+                <div>
+                  <h4 className="font-headline-sm text-headline-sm font-semibold mb-1">Analítica Predictiva</h4>
+                  <p className="font-body-sm text-body-sm text-slate-400">Realiza estimaciones de esfuerzo, viabilidad de negocio y modelado de datos con Power BI.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded bg-slate-800 flex items-center justify-center shrink-0 border border-slate-700">
+                  <span className="material-symbols-outlined text-[16px] text-accent-mint-deep">lock</span>
+                </div>
+                <div>
+                  <h4 className="font-headline-sm text-headline-sm font-semibold text-accent-mint-deep mb-1">Privacidad BYOK total</h4>
+                  <p className="font-body-sm text-body-sm text-slate-400">Sprinto no procesa ni almacena tus claves en bases de datos. Todo viaja encriptado AES-256 GCM directo al LLM.</p>
+                </div>
               </div>
             </div>
           </div>
-
-          {/* Action 4 */}
-          <div className="bg-surface-canvas p-space-lg rounded-xl flex flex-col justify-between shadow-sm">
-            <div>
-              <div className="flex items-center justify-between mb-space-sm">
-                <span className="font-label-meta text-label-meta uppercase text-text-muted">Acción 04</span>
-                <span className="font-label-code text-[11px] bg-surface-card px-2 py-0.5 rounded text-text-secondary">Auto-triage</span>
+          <div className="w-full md:w-1/2 flex justify-center">
+            <div className="bg-[#1E293B] p-space-md rounded-xl border border-slate-700 w-full max-w-md shadow-2xl relative">
+              <div className="flex items-center gap-2 mb-4 border-b border-slate-700 pb-3">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <span className="font-label-code text-[11px] text-slate-400 ml-2">Configuración IA - Sprinto</span>
               </div>
-              <h3 className="font-headline-sm text-headline-sm font-semibold text-text-primary mb-space-xs">
-                Triage y clasificación inteligente
-              </h3>
-              <p className="font-body-md text-body-md text-text-secondary mb-space-md">
-                Asigna prioridad, severidad, equipo y componente técnico analizando el texto del ticket o reporte de error del usuario.
-              </p>
-              <div className="bg-surface-card p-space-sm rounded-lg font-label-code text-[11px] flex items-center justify-between text-text-primary">
-                <span className="flex items-center gap-1 text-text-secondary">
-                  <span>Input: "500 error en checkout Safari"</span>
-                </span>
-                <span className="bg-primary-container/40 text-on-primary-container px-2 py-0.5 rounded font-medium">→ Bug / P1 / Web-Checkout</span>
+              <div className="space-y-4 font-label-code text-[12px]">
+                <div className="text-slate-400">
+                  <span className="text-pink-400">const</span> <span className="text-blue-400">aiModel</span> = <span className="text-green-400">'gemini-1.5-pro'</span>;
+                </div>
+                <div className="p-3 bg-slate-900 rounded border border-slate-800 font-mono text-slate-300">
+                  <span className="block text-slate-500 mb-2">{"// Configura tu clave encriptada"}</span>
+                  <span className="text-purple-400">Security</span>.<span className="text-blue-300">setKey</span>(
+                  <br />&nbsp;&nbsp;<span className="text-green-400">"AIzaSyC..."</span>
+                  <br />);
+                </div>
+                <div className="p-3 bg-slate-900 rounded border border-slate-800 font-mono">
+                  <span className="text-green-400">✔ Clave válida y operativa.</span>
+                  <br />
+                  <span className="text-slate-400">Costo estimado mensual: ~$1.20 USD</span>
+                </div>
               </div>
             </div>
           </div>
@@ -114,65 +92,47 @@ export const LandingIASection: React.FC = () => {
 // 8. WORKFLOW
 export const LandingWorkflow: React.FC = () => {
   return (
-    <section className="w-full py-28 px-margin-mobile md:px-margin max-w-[1200px] mx-auto">
-      <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-space-xl">
-        <span className="font-label-meta text-label-meta uppercase tracking-wider text-text-muted mb-space-xs">Ciclo de vida completo</span>
-        <h2 className="font-headline-lg text-headline-md md:text-headline-lg text-text-primary font-semibold tracking-tight mb-space-sm">
-          De la primera idea a producción sin pérdidas de contexto
+    <section className="w-full py-space-xl bg-surface-canvas border-t border-border-muted overflow-hidden">
+      <div className="max-w-[1200px] mx-auto px-margin-mobile md:px-margin text-center mb-space-xl">
+        <h2 className="font-headline-lg text-headline-md md:text-headline-lg font-semibold tracking-tight text-text-primary">
+          El ciclo de vida de un feature
         </h2>
-        <p className="font-body-lg text-body-md md:text-body-lg text-text-secondary">
-          Un flujo continuo y sin fricción donde cada fase alimenta a la siguiente de manera determinista.
+        <p className="font-body-lg text-body-md md:text-body-lg text-text-secondary mt-space-sm max-w-2xl mx-auto">
+          Desde la idea hasta producción, sin reuniones de seguimiento.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-space-sm relative">
-        <div className="bg-surface-card p-space-md rounded-lg shadow-sm flex flex-col justify-between hover:translate-y-[-2px] transition-all">
-          <div>
-            <span className="font-label-code text-[11px] text-text-muted">01 / CAPTURA</span>
-            <h4 className="font-headline-sm text-[16px] font-semibold text-text-primary mt-1 mb-1">Idea</h4>
-            <p className="font-body-sm text-[12px] text-text-secondary">Documento rápido de specs o feedback de cliente.</p>
+      <div className="relative max-w-[1000px] mx-auto px-margin-mobile md:px-margin">
+        <div className="absolute top-1/2 left-0 w-full h-[2px] bg-border-strong -translate-y-1/2 hidden md:block"></div>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-space-lg relative z-10">
+          <div className="bg-surface-card p-space-md rounded-xl shadow-sm border border-border-muted flex flex-col items-center text-center">
+            <div className="w-12 h-12 bg-surface-canvas rounded-full flex items-center justify-center border-4 border-surface-card shadow-sm mb-space-md text-text-primary font-label-code font-bold">
+              01
+            </div>
+            <h4 className="font-headline-sm text-[16px] font-semibold text-text-primary mb-1">Creación</h4>
+            <p className="font-body-sm text-body-sm text-text-secondary">Diseña proyectos multi-tenant y añade a tu equipo en segundos.</p>
           </div>
-          <div className="pt-space-md font-label-code text-[10px] text-text-muted">Avg: 2 horas</div>
-        </div>
-        <div className="bg-surface-card p-space-md rounded-lg shadow-sm flex flex-col justify-between hover:translate-y-[-2px] transition-all">
-          <div>
-            <span className="font-label-code text-[11px] text-text-muted">02 / DEFINICIÓN</span>
-            <h4 className="font-headline-sm text-[16px] font-semibold text-text-primary mt-1 mb-1">Planificación</h4>
-            <p className="font-body-sm text-[12px] text-text-secondary">Desglose de epics y estimación de capacidad de sprint.</p>
+          <div className="bg-surface-card p-space-md rounded-xl shadow-sm border border-border-muted flex flex-col items-center text-center">
+            <div className="w-12 h-12 bg-surface-canvas rounded-full flex items-center justify-center border-4 border-surface-card shadow-sm mb-space-md text-text-primary font-label-code font-bold">
+              02
+            </div>
+            <h4 className="font-headline-sm text-[16px] font-semibold text-text-primary mb-1">Ideación</h4>
+            <p className="font-body-sm text-body-sm text-text-secondary">Usa Gemini para descomponer ideas vagas en tickets técnicos.</p>
           </div>
-          <div className="pt-space-md font-label-code text-[10px] text-text-muted">Avg: 1 día</div>
-        </div>
-        <div className="bg-surface-card p-space-md rounded-lg shadow-sm flex flex-col justify-between hover:translate-y-[-2px] transition-all">
-          <div>
-            <span className="font-label-code text-[11px] text-text-muted">03 / ORDEN</span>
-            <h4 className="font-headline-sm text-[16px] font-semibold text-text-primary mt-1 mb-1">Priorización</h4>
-            <p className="font-body-sm text-[12px] text-text-secondary">Matriz de impacto/esfuerzo y orden en backlog activo.</p>
+          <div className="bg-surface-card p-space-md rounded-xl shadow-sm border border-border-muted flex flex-col items-center text-center">
+            <div className="w-12 h-12 bg-surface-canvas rounded-full flex items-center justify-center border-4 border-surface-card shadow-sm mb-space-md text-text-primary font-label-code font-bold">
+              03
+            </div>
+            <h4 className="font-headline-sm text-[16px] font-semibold text-text-primary mb-1">Ejecución</h4>
+            <p className="font-body-sm text-body-sm text-text-secondary">Sincroniza y comenta en tiempo real en la vista Kanban fluida.</p>
           </div>
-          <div className="pt-space-md font-label-code text-[10px] text-text-muted">Avg: 2 horas</div>
-        </div>
-        <div className="bg-surface-card p-space-md rounded-lg shadow-sm flex flex-col justify-between hover:translate-y-[-2px] transition-all ring-1 ring-border-strong">
-          <div>
-            <span className="font-label-code text-[11px] text-accent-mint-deep font-semibold">04 / CÓDIGO</span>
-            <h4 className="font-headline-sm text-[16px] font-semibold text-text-primary mt-1 mb-1">Desarrollo</h4>
-            <p className="font-body-sm text-[12px] text-text-secondary">Branches automáticos con prefijo de ticket y commits linkeados.</p>
+          <div className="bg-surface-card p-space-md rounded-xl shadow-sm border border-border-muted flex flex-col items-center text-center">
+            <div className="w-12 h-12 bg-primary-container rounded-full flex items-center justify-center border-4 border-surface-card shadow-sm mb-space-md text-on-primary-container font-label-code font-bold">
+              <span className="material-symbols-outlined text-[20px]">flag</span>
+            </div>
+            <h4 className="font-headline-sm text-[16px] font-semibold text-text-primary mb-1">Exportación</h4>
+            <p className="font-body-sm text-body-sm text-text-secondary">Descarga todas tus tareas completadas localmente en JSON.</p>
           </div>
-          <div className="pt-space-md font-label-code text-[10px] text-accent-mint-deep font-medium">Ciclo: 1.8 días</div>
-        </div>
-        <div className="bg-surface-card p-space-md rounded-lg shadow-sm flex flex-col justify-between hover:translate-y-[-2px] transition-all">
-          <div>
-            <span className="font-label-code text-[11px] text-text-muted">05 / REVISIÓN</span>
-            <h4 className="font-headline-sm text-[16px] font-semibold text-text-primary mt-1 mb-1">Seguimiento</h4>
-            <p className="font-body-sm text-[12px] text-text-secondary">Validación de QA, tests automatizados y code review.</p>
-          </div>
-          <div className="pt-space-md font-label-code text-[10px] text-text-muted">Avg: 4 horas</div>
-        </div>
-        <div className="bg-surface-card p-space-md rounded-lg shadow-sm flex flex-col justify-between hover:translate-y-[-2px] transition-all">
-          <div>
-            <span className="font-label-code text-[11px] text-accent-mint-deep font-semibold">06 / RELEASE</span>
-            <h4 className="font-headline-sm text-[16px] font-semibold text-text-primary mt-1 mb-1">Entrega</h4>
-            <p className="font-body-sm text-[12px] text-text-secondary">Deploy a producción, changelog automático y ticket cerrado.</p>
-          </div>
-          <div className="pt-space-md font-label-code text-[10px] text-accent-mint-deep font-medium">Continuo {"<10m"}</div>
         </div>
       </div>
     </section>
@@ -182,108 +142,72 @@ export const LandingWorkflow: React.FC = () => {
 // 9. COMPARISON
 export const LandingComparison: React.FC = () => {
   return (
-    <section className="w-full py-28 bg-surface-card">
-      <div className="max-w-[1200px] mx-auto px-margin-mobile md:px-margin">
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-space-xl">
-          <span className="font-label-meta text-label-meta uppercase tracking-wider text-text-muted mb-space-xs">Comparativa directa</span>
-          <h2 className="font-headline-lg text-headline-md md:text-headline-lg font-semibold tracking-tight text-text-primary mb-space-sm">
-            Ingeniería de alta velocidad vs. Herramientas heredadas
-          </h2>
-          <p className="font-body-lg text-body-md md:text-body-lg text-text-secondary">
-            Decisiones de arquitectura diseñadas para eliminar la frustración en cada interacción diaria.
-          </p>
-        </div>
+    <section className="w-full py-28 px-margin-mobile md:px-margin max-w-[1000px] mx-auto">
+      <div className="text-center mb-space-xl">
+        <h2 className="font-headline-lg text-headline-md md:text-headline-lg font-semibold tracking-tight text-text-primary">
+          La diferencia es estructural
+        </h2>
+      </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left font-body-sm border-collapse">
-            <thead>
-              <tr className="font-label-code text-[11px] text-text-muted uppercase">
-                <th className="py-space-md px-space-md">Dimensión técnica</th>
-                <th className="py-space-md px-space-md bg-surface-canvas/80 text-text-primary font-bold">Sprinto</th>
-                <th className="py-space-md px-space-md text-text-muted">Herramientas tradicionales (Jira / Legadas)</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border-subtle font-body-md">
-              <tr>
-                <td className="py-space-md px-space-md font-medium text-text-primary">Velocidad de interacción</td>
-                <td className="py-space-md px-space-md bg-surface-canvas/40 font-semibold text-accent-mint-deep font-label-code">
-                  {"< 50ms (atención instantánea y optimista)"}
-                </td>
-                <td className="py-space-md px-space-md text-text-secondary font-label-code">
-                  {"> 1.2s de recarga por cada cambio de pantalla"}
-                </td>
-              </tr>
-              <tr>
-                <td className="py-space-md px-space-md font-medium text-text-primary">Curva de adopción</td>
-                <td className="py-space-md px-space-md bg-surface-canvas/40 font-semibold text-text-primary">
-                  Menos de 1 hora para todo el equipo
-                </td>
-                <td className="py-space-md px-space-md text-text-secondary">
-                  Semanas de capacitación, cursos y consultores certificados
-                </td>
-              </tr>
-              <tr>
-                <td className="py-space-md px-space-md font-medium text-text-primary">Automatización & IA</td>
-                <td className="py-space-md px-space-md bg-surface-canvas/40 font-semibold text-text-primary">
-                  Asistente contextual integrado en cada acción nativa
-                </td>
-                <td className="py-space-md px-space-md text-text-secondary">
-                  Plugins caros de terceros y módulos desalineados
-                </td>
-              </tr>
-              <tr>
-                <td className="py-space-md px-space-md font-medium text-text-primary">Navegación por teclado</td>
-                <td className="py-space-md px-space-md bg-surface-canvas/40 font-semibold text-text-primary font-label-code">
-                  100% de la app controlable por comandos (⌘K, K, P, Esc)
-                </td>
-                <td className="py-space-md px-space-md text-text-secondary">
-                  Dependencia total de clicks de ratón y menús anidados
-                </td>
-              </tr>
-              <tr>
-                <td className="py-space-md px-space-md font-medium text-text-primary">Filosofía de producto</td>
-                <td className="py-space-md px-space-md bg-surface-canvas/40 font-semibold text-text-primary">
-                  Hecho para que los ingenieros construyan software rápido
-                </td>
-                <td className="py-space-md px-space-md text-text-secondary">
-                  Burocracia corporativa sobrediseñada para auditorías
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div className="bg-surface-card rounded-2xl shadow-sm border border-border-strong overflow-hidden">
+        <div className="grid grid-cols-3 font-label-code text-label-code text-text-muted bg-surface-canvas border-b border-border-strong px-space-md py-space-sm">
+          <div className="col-span-1">Métrica</div>
+          <div className="col-span-1 text-center font-semibold text-text-primary">Sprinto</div>
+          <div className="col-span-1 text-center">Software Tradicional</div>
+        </div>
+        
+        <div className="divide-y divide-border-muted">
+          <div className="grid grid-cols-3 px-space-md py-space-md items-center hover:bg-surface transition-colors">
+            <div className="col-span-1 font-body-sm text-text-primary font-medium">Interacciones UI</div>
+            <div className="col-span-1 text-center text-accent-mint-deep font-semibold">{"< 50ms"} (Firebase RT)</div>
+            <div className="col-span-1 text-center text-text-secondary">Spinners de carga lentos</div>
+          </div>
+          <div className="grid grid-cols-3 px-space-md py-space-md items-center hover:bg-surface transition-colors">
+            <div className="col-span-1 font-body-sm text-text-primary font-medium">Editor Nativo</div>
+            <div className="col-span-1 text-center text-accent-mint-deep font-semibold">Markdown rico</div>
+            <div className="col-span-1 text-center text-text-secondary">WYSIWYG limitados</div>
+          </div>
+          <div className="grid grid-cols-3 px-space-md py-space-md items-center hover:bg-surface transition-colors">
+            <div className="col-span-1 font-body-sm text-text-primary font-medium">Gestión de IA</div>
+            <div className="col-span-1 text-center text-accent-mint-deep font-semibold">Céntimos con BYOK</div>
+            <div className="col-span-1 text-center text-text-secondary">+$20 USD Extras / usuario</div>
+          </div>
+          <div className="grid grid-cols-3 px-space-md py-space-md items-center hover:bg-surface transition-colors">
+            <div className="col-span-1 font-body-sm text-text-primary font-medium">Coste Mensual Base</div>
+            <div className="col-span-1 text-center text-accent-mint-deep font-semibold">$0</div>
+            <div className="col-span-1 text-center text-text-secondary">$15 - $35 USD / usuario</div>
+          </div>
         </div>
       </div>
     </section>
   );
 };
 
-// 10. CTA FINAL
+// 10. CTA
 export const LandingCTA: React.FC = () => {
+  const setLoginOpen = useUIStore((state) => state.setLoginOpen);
+
   return (
-    <section className="w-full py-28 px-margin-mobile md:px-margin max-w-[1200px] mx-auto">
-      <div className="w-full rounded-2xl bg-[#111827] text-on-primary p-space-xl md:p-20 text-center relative overflow-hidden shadow-2xl">
-        <div className="absolute top-0 left-1/4 right-1/4 h-[2px] bg-gradient-to-r from-transparent via-primary-container to-transparent"></div>
-        <div className="max-w-3xl mx-auto flex flex-col items-center">
-          <span className="font-label-code text-label-code text-primary-container uppercase tracking-wider mb-space-sm font-semibold">
-            Listo para el siguiente nivel de ejecución
-          </span>
-          <h2 className="font-headline-lg text-headline-md md:text-headline-lg font-semibold tracking-tight text-white mb-space-md">
-            Deja de gestionar herramientas. Empieza a gestionar trabajo.
-          </h2>
-          <p className="font-body-lg text-body-md md:text-body-lg text-text-muted max-w-xl mb-space-xl">
-            Únete a cientos de equipos de ingeniería que han sustituido la complejidad por claridad, cadencia y velocidad de entrega.
-          </p>
-          <form className="flex flex-col sm:flex-row items-center gap-space-sm w-full max-w-md mb-space-md" onSubmit={(e) => e.preventDefault()}>
-            <input className="w-full h-11 px-space-md rounded-lg bg-surface-canvas text-text-primary font-body-sm focus:outline-none focus:ring-2 focus:ring-primary-container" placeholder="tu@empresa.com" required type="email" />
-            <button className="w-full sm:w-auto shrink-0 h-11 px-space-lg bg-primary-container hover:bg-[#4ade80] text-text-primary font-body-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-space-xs cursor-pointer" type="submit">
-              <span>Empezar gratis</span>
-              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-            </button>
-          </form>
-          <p className="font-label-meta text-label-meta text-text-muted">
-            Prueba gratuita de 14 días <span className="mx-1">·</span> Sin tarjeta de crédito requerida <span className="mx-1">·</span> Cancela cuando quieras
-          </p>
+    <section className="w-full py-24 px-margin-mobile md:px-margin text-center bg-primary-container text-on-primary-container relative overflow-hidden" id="precio">
+      <div className="absolute inset-0 bg-gradient-to-b from-primary-container/80 to-primary-container pointer-events-none"></div>
+      <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
+        <h2 className="font-headline-lg text-headline-lg font-bold tracking-tight mb-space-md">
+          Paga $0 por usuario. Siempre.
+        </h2>
+        <p className="font-body-lg text-[20px] max-w-2xl leading-relaxed mb-space-xl opacity-90">
+          Sprinto es una plataforma abierta diseñada por y para desarrolladores. Sin muros de pago, sin límites de proyectos.
+        </p>
+        <div className="flex flex-col sm:flex-row items-center gap-space-md">
+          <button 
+            className="inline-flex items-center justify-center px-8 py-4 text-button font-button text-surface bg-text-primary hover:bg-text-secondary rounded-lg transition-all active:scale-[0.98] shadow-md"
+            onClick={() => setLoginOpen(true)}
+          >
+            Crear cuenta gratis ahora
+          </button>
         </div>
+        <span className="font-label-meta text-[13px] mt-space-lg opacity-75">
+          Sin tarjetas de crédito · Trae tu propia clave Gemini · Datos exportables
+        </span>
       </div>
     </section>
   );
@@ -291,51 +215,22 @@ export const LandingCTA: React.FC = () => {
 
 // 11. FOOTER
 export const LandingFooter: React.FC = () => {
+  const setPrivacyOpen = useUIStore((state) => state.setPrivacyOpen);
+
   return (
-    <footer className="w-full bg-surface-card py-space-xl">
-      <div className="max-w-[1200px] mx-auto px-margin-mobile md:px-margin flex flex-col gap-space-xl">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-gutter">
-          <div className="col-span-2 flex flex-col gap-space-sm">
-            <div className="flex items-center gap-space-xs">
-              <img alt="Sprinto Brand Logo" className="h-6 w-auto object-contain" src="/sprinto-logo.svg" />
-              <span className="font-headline-sm text-headline-sm text-text-primary">Sprinto</span>
-            </div>
-            <p className="font-body-sm text-body-sm text-text-secondary max-w-xs">Arquitectura de cumplimiento y seguridad automatizada de alto rendimiento para equipos de ingeniería modernos.</p>
-            <div className="inline-flex items-center gap-space-xs px-space-sm py-space-xs rounded-full bg-surface-canvas w-fit">
-              <span className="w-2 h-2 rounded-full bg-accent-mint-deep"></span>
-              <span className="font-label-code text-label-code text-text-primary">Sistemas operativos 99.99%</span>
-            </div>
-          </div>
-          <div className="flex flex-col gap-space-xs">
-            <span className="font-label-meta text-label-meta uppercase text-text-muted">Producto</span>
-            <a className="font-body-sm text-body-sm text-text-secondary hover:text-text-primary transition-colors" href="#">Overview</a>
-            <a className="font-body-sm text-body-sm text-text-secondary hover:text-text-primary transition-colors" href="#">Integraciones</a>
-            <a className="font-body-sm text-body-sm text-text-secondary hover:text-text-primary transition-colors" href="#">Motor IA</a>
-          </div>
-          <div className="flex flex-col gap-space-xs">
-            <span className="font-label-meta text-label-meta uppercase text-text-muted">Recursos</span>
-            <a className="font-body-sm text-body-sm text-text-secondary hover:text-text-primary transition-colors" href="#">Documentación</a>
-            <a className="font-body-sm text-body-sm text-text-secondary hover:text-text-primary transition-colors" href="#">Guías SOC2</a>
-            <a className="font-body-sm text-body-sm text-text-secondary hover:text-text-primary transition-colors" href="#">API Specs</a>
-          </div>
-          <div className="flex flex-col gap-space-xs">
-            <span className="font-label-meta text-label-meta uppercase text-text-muted">Empresa</span>
-            <a className="font-body-sm text-body-sm text-text-secondary hover:text-text-primary transition-colors" href="#">Sobre nosotros</a>
-            <a className="font-body-sm text-body-sm text-text-secondary hover:text-text-primary transition-colors" href="#">Contacto</a>
-          </div>
-          <div className="flex flex-col gap-space-xs">
-            <span className="font-label-meta text-label-meta uppercase text-text-muted">Legal</span>
-            <a className="font-body-sm text-body-sm text-text-secondary hover:text-text-primary transition-colors" href="#">Privacidad</a>
-            <a className="font-body-sm text-body-sm text-text-secondary hover:text-text-primary transition-colors" href="#">Términos</a>
-            <a className="font-body-sm text-body-sm text-text-secondary hover:text-text-primary transition-colors" href="#">Seguridad</a>
-          </div>
+    <footer className="w-full bg-surface-canvas border-t border-border-muted py-space-xl text-text-secondary font-body-sm">
+      <div className="max-w-[1200px] mx-auto px-margin-mobile md:px-margin flex flex-col md:flex-row items-center justify-between gap-space-lg">
+        <div className="flex items-center gap-space-xs text-text-primary">
+          <img src="/sprinto-logo.svg" alt="Sprinto Logo" width={28} height={28} className="rounded-md" />
+          <span className="font-headline-sm font-bold tracking-tight">Sprinto</span>
         </div>
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-meta text-label-meta text-text-muted pt-space-md border-t border-border-subtle">
-          <p>© 2026 Sprinto Inc. Todos los derechos reservados.</p>
-          <div className="flex items-center gap-space-md">
-            <a className="hover:text-text-primary transition-colors" href="#">Privacidad</a>
-            <a className="hover:text-text-primary transition-colors" href="#">Condiciones del servicio</a>
-          </div>
+        <div className="flex items-center gap-space-md font-label-code text-[13px]">
+          <a className="hover:text-text-primary transition-colors" href="#ia-byok">Seguridad</a>
+          <button className="hover:text-text-primary transition-colors" onClick={() => setPrivacyOpen(true)}>Privacidad y Términos</button>
+        </div>
+        <div className="flex items-center gap-2 px-3 py-1 bg-surface-card border border-border-strong rounded-full font-label-code text-[11px] text-accent-mint-deep">
+          <span className="w-2 h-2 rounded-full bg-accent-mint-deep animate-pulse"></span>
+          <span>Sistemas 100% Operativos</span>
         </div>
       </div>
     </footer>
